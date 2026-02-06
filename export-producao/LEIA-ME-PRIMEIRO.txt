@@ -1,0 +1,71 @@
+╔══════════════════════════════════════════════════════════════╗
+║  📦 EXPORTAÇÃO PARA PRODUÇÃO - FREDERICA PASSOS             ║
+╚══════════════════════════════════════════════════════════════╝
+
+✅ ARQUIVOS EXPORTADOS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. footer.php
+   → Footer atualizado com botão scrollToTop e JavaScript
+   → Localização no servidor: wp-content/themes/frederica-passos/footer.php
+
+2. elementor-data.json
+   → Conteúdo completo da página Home no Elementor
+   → Inclui todas as 13 seções com as últimas alterações:
+     • Header com menu funcional
+     • Hero com carrossel
+     • Menu mobile que ocupa tela inteira
+     • Scroll suave para seções
+     • Botão scrollToTop (no Elementor, mas será substituído pelo do footer)
+
+3. COMO-IMPORTAR.md
+   → Guia completo passo a passo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 MÉTODO RÁPIDO (Recomendado):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PASSO 1: Atualizar Footer
+─────────────────────────
+1. Acesse cPanel → File Manager
+2. Vá até: public_html/cpanel/wp-content/themes/frederica-passos/
+3. Faça backup do footer.php atual
+4. Faça upload do novo footer.php desta pasta
+
+PASSO 2: Importar Elementor (Escolha UMA opção)
+────────────────────────────────────────────────
+
+OPÇÃO A - Via WordPress Admin (Mais Fácil):
+1. Acesse: https://fredericapassos.pt/cpanel/wp-admin
+2. Vá em: Páginas → Home → Editar com Elementor
+3. No Elementor: ☰ → Importar Template
+4. Selecione: elementor-data.json
+5. Clique em Atualizar
+
+⚠️ OPÇÃO B - Via phpMyAdmin (NÃO RECOMENDADO - Pode desconfigurar o site!)
+   Use apenas se a Opção A não funcionar e você souber o que está fazendo.
+   Veja o arquivo SOLUCAO-SEGURA.md para instruções detalhadas.
+
+PASSO 3: Limpar Cache
+─────────────────────
+1. WordPress Admin → Elementor → Tools → Regenerate CSS
+2. Limpe cache do navegador (Ctrl+F5)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ O QUE FOI ATUALIZADO:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Botão scrollToTop funcional (no footer.php)
+✓ Menu mobile ocupa tela inteira
+✓ Scroll suave para seções ao clicar nos links do menu
+✓ Header com z-index correto
+✓ JavaScript para navegação entre seções
+✓ Footer com botões funcionais
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 Para instruções detalhadas, leia: COMO-IMPORTAR.md
+
+🌐 Site: https://fredericapassos.pt/cpanel

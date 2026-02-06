@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Lottie from 'lottie-react'
 import bookAnimation from '../../public/bookat2.json'
@@ -9,6 +10,7 @@ import documentAnimation from '../../public/Document.json'
 import videoAnimation from '../../public/video.json'
 
 export default function InicioPage() {
+  const router = useRouter()
   const [isAgendeHovered, setIsAgendeHovered] = useState(false)
   const [isContrateHovered, setIsContrateHovered] = useState(false)
   const [activeSection, setActiveSection] = useState('Início')
@@ -130,10 +132,16 @@ export default function InicioPage() {
     'Sobre',
     'Áreas de Atuação',
     'Serviços',
+    'Blog',
     'Contato'
   ]
 
   const scrollToSection = (sectionName: string) => {
+    if (sectionName === 'Blog') {
+      router.push('/blog')
+      return
+    }
+
     const sectionMap: Record<string, string> = {
       'Início': '',
       'Sobre': 'Sobre',
@@ -143,7 +151,7 @@ export default function InicioPage() {
     }
 
     const sectionId = sectionMap[sectionName]
-    
+
     if (sectionId === '') {
       window.scrollTo({
         top: 0,
@@ -162,7 +170,7 @@ export default function InicioPage() {
         })
       }
     }
-    
+
     setActiveSection(sectionName)
   }
 
@@ -178,10 +186,10 @@ export default function InicioPage() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
-      
+
       // Controlar botão scroll to top
       setShowScrollTop(currentScrollY > 300)
-      
+
       // Controlar header
       if (currentScrollY < 100) {
         setIsHeaderVisible(true)
@@ -192,7 +200,7 @@ export default function InicioPage() {
         // Scrolling up
         setIsHeaderVisible(true)
       }
-      
+
       setLastScrollY(currentScrollY)
     }
 
@@ -202,10 +210,10 @@ export default function InicioPage() {
 
   useEffect(() => {
     let rafId: number | null = null
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       if (rafId) return
-      
+
       rafId = requestAnimationFrame(() => {
         if (footerRef.current) {
           const rect = footerRef.current.getBoundingClientRect()
@@ -230,12 +238,12 @@ export default function InicioPage() {
   useEffect(() => {
     const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor
     let animationId: number | null = null
-    
+
     const animate = () => {
       setSmoothPosition(prev => {
         const diffX = Math.abs(prev.x - mousePosition.x)
         const diffY = Math.abs(prev.y - mousePosition.y)
-        
+
         if (diffX < 0.01 && diffY < 0.01) {
           if (animationId) {
             cancelAnimationFrame(animationId)
@@ -243,16 +251,16 @@ export default function InicioPage() {
           }
           return prev
         }
-        
+
         return {
           x: lerp(prev.x, mousePosition.x, 0.08),
           y: lerp(prev.y, mousePosition.y, 0.08),
         }
       })
-      
+
       animationId = requestAnimationFrame(animate)
     }
-    
+
     animationId = requestAnimationFrame(animate)
     return () => {
       if (animationId) cancelAnimationFrame(animationId)
@@ -269,7 +277,7 @@ export default function InicioPage() {
   // Efeito typewriter
   useEffect(() => {
     const currentPhrase = phrases[currentPhraseIndex]
-    
+
     if (isTyping) {
       // Escrevendo
       if (typewriterText.length < currentPhrase.length) {
@@ -528,7 +536,7 @@ export default function InicioPage() {
                 const isActive = activeSection === item
                 const isHovered = hoveredItem === item
                 const showLine = isActive || isHovered
-                
+
                 return (
                   <button
                     key={item}
@@ -542,7 +550,7 @@ export default function InicioPage() {
                     onClick={() => scrollToSection(item)}
                   >
                     {item}
-                    
+
                     {/* Linha laranja animada */}
                     <motion.div
                       className="absolute bottom-0 left-1/2 h-0.5"
@@ -599,7 +607,7 @@ export default function InicioPage() {
             </div>
 
             {/* Menu Mobile - Hamburger Animado */}
-            <button 
+            <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden z-50 relative w-8 h-8 flex items-center justify-center"
               aria-label="Toggle menu"
@@ -645,20 +653,38 @@ export default function InicioPage() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-              <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
-                {/* Menu Items e Logo agrupados */}
-                <div className="flex flex-col items-center">
-                  {/* Menu Items */}
-                  <nav className="flex flex-col items-center gap-8 mb-12">
-                    {menuItems.map((item, index) => (
-                      <motion.button
-                        key={item}
-                        onClick={() => {
-                          scrollToSection(item)
-                          setIsMobileMenuOpen(false)
-                        }}
-                        className="text-2xl font-neue-montreal"
-                        style={{ color: '#f56428' }}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
+                    {/* Menu Items e Logo agrupados */}
+                    <div className="flex flex-col items-center">
+                      {/* Menu Items */}
+                      <nav className="flex flex-col items-center gap-8 mb-12">
+                        {menuItems.map((item, index) => (
+                          <motion.button
+                            key={item}
+                            onClick={() => {
+                              scrollToSection(item)
+                              setIsMobileMenuOpen(false)
+                            }}
+                            className="text-2xl font-neue-montreal"
+                            style={{ color: '#f56428' }}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{
+                              opacity: isMobileMenuOpen ? 1 : 0,
+                              y: isMobileMenuOpen ? 0 : 20
+                            }}
+                            transition={{
+                              duration: 0.4,
+                              delay: index * 0.1,
+                              ease: 'easeOut'
+                            }}
+                          >
+                            {item}
+                          </motion.button>
+                        ))}
+                      </nav>
+
+                      {/* Logo */}
+                      <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{
                           opacity: isMobileMenuOpen ? 1 : 0,
@@ -666,38 +692,20 @@ export default function InicioPage() {
                         }}
                         transition={{
                           duration: 0.4,
-                          delay: index * 0.1,
+                          delay: menuItems.length * 0.1,
                           ease: 'easeOut'
                         }}
                       >
-                        {item}
-                      </motion.button>
-                    ))}
-                  </nav>
-
-                  {/* Logo */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{
-                      opacity: isMobileMenuOpen ? 1 : 0,
-                      y: isMobileMenuOpen ? 0 : 20
-                    }}
-                    transition={{
-                      duration: 0.4,
-                      delay: menuItems.length * 0.1,
-                      ease: 'easeOut'
-                    }}
-                  >
-                    <Image
-                      src="/logohoriz.svg"
-                      alt="Logo"
-                      width={150}
-                      height={50}
-                      className="h-8 w-auto"
-                    />
-                  </motion.div>
-                </div>
-              </div>
+                        <Image
+                          src="/logohoriz.svg"
+                          alt="Logo"
+                          width={150}
+                          height={50}
+                          className="h-8 w-auto"
+                        />
+                      </motion.div>
+                    </div>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -714,156 +722,156 @@ export default function InicioPage() {
               const isActive = index === currentSlide
               const isNext = index > currentSlide
               const isPrev = index < currentSlide
-              
+
               return (
-              <motion.div
-                key={slide.id}
-                className="absolute inset-0"
-                animate={{
-                  x: isActive ? '0%' : isNext ? '100%' : '-100%',
-                  zIndex: isActive ? 1 : 0,
-                }}
-                transition={{
-                  duration: 0.6,
-                  ease: 'easeInOut',
-                }}
-                style={{
-                  backgroundColor: slide.color,
-                }}
-              >
-                {/* Banner roxo */}
-                {slide.color === '#70309e' && (
-                  <div className="absolute inset-0 w-full h-full overflow-hidden">
-                    {/* Desktop */}
-                    <Image
-                      src="/banner01.jpg"
-                      alt=""
-                      fill
-                      className="object-cover hidden sm:block"
-                      style={{ transform: 'scale(1.1)' }}
-                      quality={100}
-                      unoptimized
-                      priority={index === currentSlide}
-                    />
-                    {/* Mobile */}
-                    <Image
-                      src="/banner01mob.jpg"
-                      alt=""
-                      fill
-                      className="block sm:hidden w-full"
-                      style={{ 
-                        objectFit: 'cover',
-                        objectPosition: 'center center',
-                        width: '100%',
-                        minWidth: '100%'
-                      }}
-                      quality={100}
-                      unoptimized
-                      priority={index === currentSlide}
-                    />
-                  </div>
-                )}
+                <motion.div
+                  key={slide.id}
+                  className="absolute inset-0"
+                  animate={{
+                    x: isActive ? '0%' : isNext ? '100%' : '-100%',
+                    zIndex: isActive ? 1 : 0,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    ease: 'easeInOut',
+                  }}
+                  style={{
+                    backgroundColor: slide.color,
+                  }}
+                >
+                  {/* Banner roxo */}
+                  {slide.color === '#70309e' && (
+                    <div className="absolute inset-0 w-full h-full overflow-hidden">
+                      {/* Desktop */}
+                      <Image
+                        src="/banner01.jpg"
+                        alt=""
+                        fill
+                        className="object-cover hidden sm:block"
+                        style={{ transform: 'scale(1.1)' }}
+                        quality={100}
+                        unoptimized
+                        priority={index === currentSlide}
+                      />
+                      {/* Mobile */}
+                      <Image
+                        src="/banner01mob.jpg"
+                        alt=""
+                        fill
+                        className="block sm:hidden w-full"
+                        style={{
+                          objectFit: 'cover',
+                          objectPosition: 'center center',
+                          width: '100%',
+                          minWidth: '100%'
+                        }}
+                        quality={100}
+                        unoptimized
+                        priority={index === currentSlide}
+                      />
+                    </div>
+                  )}
 
-                {/* Banner cinza */}
-                {slide.color === '#6b7280' && (
-                  <div className="absolute inset-0 w-full h-full overflow-hidden">
-                    {/* Desktop */}
-                    <Image
-                      src="/banner02.jpg"
-                      alt=""
-                      fill
-                      className="object-cover hidden sm:block"
-                      quality={100}
-                      unoptimized
-                      priority={index === currentSlide}
-                    />
-                    {/* Mobile */}
-                    <Image
-                      src="/banner02mob.jpg"
-                      alt=""
-                      fill
-                      className="block sm:hidden w-full"
-                      style={{ 
-                        objectFit: 'cover',
-                        objectPosition: 'center center',
-                        width: '100%',
-                        minWidth: '100%'
-                      }}
-                      quality={100}
-                      unoptimized
-                      priority={index === currentSlide}
-                    />
-                  </div>
-                )}
+                  {/* Banner cinza */}
+                  {slide.color === '#6b7280' && (
+                    <div className="absolute inset-0 w-full h-full overflow-hidden">
+                      {/* Desktop */}
+                      <Image
+                        src="/banner02.jpg"
+                        alt=""
+                        fill
+                        className="object-cover hidden sm:block"
+                        quality={100}
+                        unoptimized
+                        priority={index === currentSlide}
+                      />
+                      {/* Mobile */}
+                      <Image
+                        src="/banner02mob.jpg"
+                        alt=""
+                        fill
+                        className="block sm:hidden w-full"
+                        style={{
+                          objectFit: 'cover',
+                          objectPosition: 'center center',
+                          width: '100%',
+                          minWidth: '100%'
+                        }}
+                        quality={100}
+                        unoptimized
+                        priority={index === currentSlide}
+                      />
+                    </div>
+                  )}
 
-                {/* Background SVG no slide laranja com parallax */}
-                {slide.color === '#f56428' && (
-                  <motion.div 
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: 'url(/srosa.svg)',
-                      backgroundSize: isMobile ? '200%' : 'clamp(35%, 50vw, 60%)',
-                      backgroundPosition: isMobile ? 'center center' : '5% center',
-                      backgroundRepeat: 'no-repeat',
-                      opacity: 1,
-                      x: parallaxX,
-                      y: parallaxY,
-                    }}
-                  />
-                )}
-                
-                {/* Conteúdo no slide laranja */}
-                {slide.color === '#f56428' && (
-                  <>
-                    {/* Textos e botão - Centralizados */}
-                    <div className="absolute left-0 top-0 bottom-0 w-full flex items-center z-10">
-                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-center sm:justify-end pr-4 sm:pr-8 md:pr-16 lg:pr-24">
-                        <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 text-white text-center sm:text-left">
-                          <h1 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-tight">
-                            Prazer,<br />
-                            Frederica Passos
-                          </h1>
-                          
-                          <p className="font-neue-montreal text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-lg">
-                            Psiquiatria Perinatal e Sexualidade Humana.<br />
-                            Consultas presenciais e online.
-                          </p>
-                          
-                          <motion.button
-                            className="font-neue-montreal text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg font-medium relative overflow-hidden w-fit self-center sm:self-start"
-                            style={{
-                              backgroundColor: '#70309e',
-                              borderRadius: '8px',
-                            }}
-                            onHoverStart={() => setIsContrateHovered(true)}
-                            onHoverEnd={() => setIsContrateHovered(false)}
-                            whileHover={{ scale: 1.05 }}
-                            transition={{
-                              duration: 0.3,
-                              ease: 'easeInOut',
-                            }}
-                          >
-                            {/* Gradiente animado no hover */}
-                            <motion.div
-                              className="absolute inset-0 rounded-lg"
+                  {/* Background SVG no slide laranja com parallax */}
+                  {slide.color === '#f56428' && (
+                    <motion.div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: 'url(/srosa.svg)',
+                        backgroundSize: isMobile ? '200%' : 'clamp(35%, 50vw, 60%)',
+                        backgroundPosition: isMobile ? 'center center' : '5% center',
+                        backgroundRepeat: 'no-repeat',
+                        opacity: 1,
+                        x: parallaxX,
+                        y: parallaxY,
+                      }}
+                    />
+                  )}
+
+                  {/* Conteúdo no slide laranja */}
+                  {slide.color === '#f56428' && (
+                    <>
+                      {/* Textos e botão - Centralizados */}
+                      <div className="absolute left-0 top-0 bottom-0 w-full flex items-center z-10">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-center sm:justify-end pr-4 sm:pr-8 md:pr-16 lg:pr-24">
+                          <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 text-white text-center sm:text-left">
+                            <h1 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-tight">
+                              Prazer,<br />
+                              Frederica Passos
+                            </h1>
+
+                            <p className="font-neue-montreal text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-lg">
+                              Psiquiatria Perinatal e Sexualidade Humana.<br />
+                              Consultas presenciais e online.
+                            </p>
+
+                            <motion.button
+                              className="font-neue-montreal text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg font-medium relative overflow-hidden w-fit self-center sm:self-start"
                               style={{
-                                background: `linear-gradient(135deg, #70309e 0%, #f56428 100%)`,
+                                backgroundColor: '#70309e',
+                                borderRadius: '8px',
                               }}
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: isContrateHovered ? 1 : 0 }}
+                              onHoverStart={() => setIsContrateHovered(true)}
+                              onHoverEnd={() => setIsContrateHovered(false)}
+                              whileHover={{ scale: 1.05 }}
                               transition={{
-                                duration: 0.4,
+                                duration: 0.3,
                                 ease: 'easeInOut',
                               }}
-                            />
-                            <span className="relative z-10">Contrate</span>
-                          </motion.button>
+                            >
+                              {/* Gradiente animado no hover */}
+                              <motion.div
+                                className="absolute inset-0 rounded-lg"
+                                style={{
+                                  background: `linear-gradient(135deg, #70309e 0%, #f56428 100%)`,
+                                }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: isContrateHovered ? 1 : 0 }}
+                                transition={{
+                                  duration: 0.4,
+                                  ease: 'easeInOut',
+                                }}
+                              />
+                              <span className="relative z-10">Contrate</span>
+                            </motion.button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </>
-                )}
-              </motion.div>
+                    </>
+                  )}
+                </motion.div>
               )
             })}
           </div>
@@ -992,12 +1000,12 @@ export default function InicioPage() {
               <h2 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 sm:mb-8" style={{ color: '#70309e' }}>
                 Uma Carreira Dedicada à Saúde Mental da Mulher
               </h2>
-              
+
               <div className="space-y-4 sm:space-y-6 text-gray-700 text-sm sm:text-base md:text-lg">
                 <p className="font-neue-montreal leading-relaxed">
                   <strong>Dra. Frederica Passos Barbizani</strong> é psiquiatra especializada em Saúde Mental da Mulher. Com foco no universo feminino, acredita que toda mulher merece cuidados de saúde mental que respeitem suas particularidades biológicas, psicológicas e sociais.
                 </p>
-                
+
                 <p className="font-neue-montreal leading-relaxed">
                   Especializou-se em Psiquiatria no Hospital Beatriz Ângelo, com foco em Psiquiatria da Mulher e Psiquiatria Perinatal. Sua prática clínica baseia-se em pilares fundamentais: cuidado humanizado, evidência científica, abordagem integral e empoderamento da paciente. Dedica-se também à investigação científica, com interesse particular em perturbações do humor no período perinatal, impacto hormonal na saúde mental, sexualidade, identidade de género, competências parentais e dinâmicas familiares.
                 </p>
@@ -1056,22 +1064,22 @@ export default function InicioPage() {
           <h2 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-8 sm:mb-12 md:mb-16 lg:mb-20 text-center" style={{ color: '#70309e' }}>
             Áreas de Especialização
           </h2>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {/* Card Mulher */}
+            {/* Card Perinatal */}
             <motion.div
-              ref={mulherCardRef}
+              ref={perinatalCardRef}
               className="relative overflow-hidden rounded-lg cursor-pointer"
               onHoverStart={() => {
                 if (!isMobile) {
-                  setHoveredCard((prev) => new Set([...Array.from(prev), 'mulher']))
+                  setHoveredCard((prev) => new Set([...Array.from(prev), 'perinatal']))
                 }
               }}
               onHoverEnd={() => {
                 if (!isMobile) {
                   setHoveredCard((prev) => {
                     const newSet = new Set(prev)
-                    newSet.delete('mulher')
+                    newSet.delete('perinatal')
                     return newSet
                   })
                 }
@@ -1081,68 +1089,64 @@ export default function InicioPage() {
             >
               <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px]">
                 <Image
-                  src="/vertical/mulher.webp"
-                  alt="Psiquiatria da Mulher"
+                  src="/vertical/perinatal.webp"
+                  alt="Psiquiatria Perinatal"
                   fill
                   className="object-cover"
                 />
-                
-                {/* Gradiente pequeno do preto para transparente */}
-                <div 
+
+                <div
                   className="absolute inset-0 z-10"
                   style={{
                     background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 30%, transparent 100%)',
                   }}
                 />
-                
-                {/* Gradiente no hover */}
+
                 <motion.div
                   className="absolute inset-0 z-20"
                   style={{
                     background: 'linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.3) 100%)',
                   }}
                   animate={{
-                    opacity: hoveredCard.has('mulher') ? 1 : 0,
+                    opacity: hoveredCard.has('perinatal') ? 1 : 0,
                   }}
                   transition={{ duration: 0.3 }}
                 />
-                
-                {/* Glow laranja embaixo no hover */}
+
                 <motion.div
                   className="absolute bottom-0 left-0 right-0 h-2 z-30"
                   style={{
                     background: '#f56428',
-                    boxShadow: hoveredCard.has('mulher') ? '0 -10px 30px rgba(245, 100, 40, 0.8)' : 'none',
+                    boxShadow: hoveredCard.has('perinatal') ? '0 -10px 30px rgba(245, 100, 40, 0.8)' : 'none',
                   }}
                   animate={{
-                    opacity: hoveredCard.has('mulher') ? 1 : 0,
-                    height: hoveredCard.has('mulher') ? '8px' : '0px',
+                    opacity: hoveredCard.has('perinatal') ? 1 : 0,
+                    height: hoveredCard.has('perinatal') ? '8px' : '0px',
                   }}
                   transition={{ duration: 0.3 }}
                 />
-                
-                {/* Conteúdo */}
+
                 <div className="absolute inset-0 z-30 flex flex-col justify-end items-center p-6 text-white text-center">
                   <motion.h3
                     className="font-jh-caudemars text-2xl md:text-3xl mb-4 text-center w-full"
                     animate={{
-                      y: hoveredCard.has('mulher') ? -20 : 0,
+                      y: hoveredCard.has('perinatal') ? -20 : 0,
                     }}
                     transition={{ duration: 0.3 }}
                   >
-                    Psiquiatria da Mulher
+                    Psiquiatria Perinatal
                   </motion.h3>
-                  
+
                   <motion.div
                     className="font-neue-montreal text-sm md:text-base"
                     animate={{
-                      opacity: hoveredCard.has('mulher') ? 1 : 0,
-                      y: hoveredCard.has('mulher') ? 0 : 20,
+                      opacity: hoveredCard.has('perinatal') ? 1 : 0,
+                      y: hoveredCard.has('perinatal') ? 0 : 20,
                     }}
                     transition={{ duration: 0.3 }}
-                    style={{ display: hoveredCard.has('mulher') ? 'block' : 'none' }}
+                    style={{ display: hoveredCard.has('perinatal') ? 'block' : 'none' }}
                   >
-                    <p>Depressão perinatal, ansiedade gestacional, POC perinatal, psicose pós-parto</p>
+                    <p>Disfunções sexuais, identidade de género, orientação sexual, disforia de género</p>
                   </motion.div>
                 </div>
               </div>
@@ -1176,14 +1180,14 @@ export default function InicioPage() {
                   fill
                   className="object-cover"
                 />
-                
-                <div 
+
+                <div
                   className="absolute inset-0 z-10"
                   style={{
                     background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 30%, transparent 100%)',
                   }}
                 />
-                
+
                 <motion.div
                   className="absolute inset-0 z-20"
                   style={{
@@ -1194,7 +1198,7 @@ export default function InicioPage() {
                   }}
                   transition={{ duration: 0.3 }}
                 />
-                
+
                 <motion.div
                   className="absolute bottom-0 left-0 right-0 h-2 z-30"
                   style={{
@@ -1207,7 +1211,7 @@ export default function InicioPage() {
                   }}
                   transition={{ duration: 0.3 }}
                 />
-                
+
                 <div className="absolute inset-0 z-30 flex flex-col justify-end items-center p-6 text-white text-center">
                   <motion.h3
                     className="font-jh-caudemars text-2xl md:text-3xl mb-4 text-center w-full"
@@ -1218,7 +1222,7 @@ export default function InicioPage() {
                   >
                     Orientação Parental
                   </motion.h3>
-                  
+
                   <motion.div
                     className="font-neue-montreal text-sm md:text-base"
                     animate={{
@@ -1234,20 +1238,20 @@ export default function InicioPage() {
               </div>
             </motion.div>
 
-            {/* Card Perinatal */}
+            {/* Card Mulher */}
             <motion.div
-              ref={perinatalCardRef}
+              ref={mulherCardRef}
               className="relative overflow-hidden rounded-lg cursor-pointer"
               onHoverStart={() => {
                 if (!isMobile) {
-                  setHoveredCard((prev) => new Set([...Array.from(prev), 'perinatal']))
+                  setHoveredCard((prev) => new Set([...Array.from(prev), 'mulher']))
                 }
               }}
               onHoverEnd={() => {
                 if (!isMobile) {
                   setHoveredCard((prev) => {
                     const newSet = new Set(prev)
-                    newSet.delete('perinatal')
+                    newSet.delete('mulher')
                     return newSet
                   })
                 }
@@ -1257,64 +1261,68 @@ export default function InicioPage() {
             >
               <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px]">
                 <Image
-                  src="/vertical/perinatal.webp"
-                  alt="Psiquiatria Perinatal"
+                  src="/vertical/mulher.webp"
+                  alt="Psiquiatria da Mulher"
                   fill
                   className="object-cover"
                 />
-                
-                <div 
+
+                {/* Gradiente pequeno do preto para transparente */}
+                <div
                   className="absolute inset-0 z-10"
                   style={{
                     background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 30%, transparent 100%)',
                   }}
                 />
-                
+
+                {/* Gradiente no hover */}
                 <motion.div
                   className="absolute inset-0 z-20"
                   style={{
                     background: 'linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.3) 100%)',
                   }}
                   animate={{
-                    opacity: hoveredCard.has('perinatal') ? 1 : 0,
+                    opacity: hoveredCard.has('mulher') ? 1 : 0,
                   }}
                   transition={{ duration: 0.3 }}
                 />
-                
+
+                {/* Glow laranja embaixo no hover */}
                 <motion.div
                   className="absolute bottom-0 left-0 right-0 h-2 z-30"
                   style={{
                     background: '#f56428',
-                    boxShadow: hoveredCard.has('perinatal') ? '0 -10px 30px rgba(245, 100, 40, 0.8)' : 'none',
+                    boxShadow: hoveredCard.has('mulher') ? '0 -10px 30px rgba(245, 100, 40, 0.8)' : 'none',
                   }}
                   animate={{
-                    opacity: hoveredCard.has('perinatal') ? 1 : 0,
-                    height: hoveredCard.has('perinatal') ? '8px' : '0px',
+                    opacity: hoveredCard.has('mulher') ? 1 : 0,
+                    height: hoveredCard.has('mulher') ? '8px' : '0px',
                   }}
                   transition={{ duration: 0.3 }}
                 />
-                
+
+                {/* Conteúdo */}
                 <div className="absolute inset-0 z-30 flex flex-col justify-end items-center p-6 text-white text-center">
                   <motion.h3
                     className="font-jh-caudemars text-2xl md:text-3xl mb-4 text-center w-full"
                     animate={{
-                      y: hoveredCard.has('perinatal') ? -20 : 0,
+                      y: hoveredCard.has('mulher') ? -20 : 0,
                     }}
                     transition={{ duration: 0.3 }}
                   >
-                    Psiquiatria Perinatal
+                    Psiquiatria da Mulher
                   </motion.h3>
-                  
+
                   <motion.div
                     className="font-neue-montreal text-sm md:text-base"
                     animate={{
-                      opacity: hoveredCard.has('perinatal') ? 1 : 0,
-                      y: hoveredCard.has('perinatal') ? 0 : 20,
+                      opacity: hoveredCard.has('mulher') ? 1 : 0,
+                      y: hoveredCard.has('mulher') ? 0 : 20,
                     }}
                     transition={{ duration: 0.3 }}
-                    style={{ display: hoveredCard.has('perinatal') ? 'block' : 'none' }}
+                    style={{ display: hoveredCard.has('mulher') ? 'block' : 'none' }}
                   >
-                    <p>Disfunções sexuais, identidade de género, orientação sexual, disforia de género</p>
+                    <p>Depressão perinatal, ansiedade gestacional, POC perinatal, psicose pós-parto</p>
                   </motion.div>
                 </div>
               </div>
@@ -1348,14 +1356,14 @@ export default function InicioPage() {
                   fill
                   className="object-cover"
                 />
-                
-                <div 
+
+                <div
                   className="absolute inset-0 z-10"
                   style={{
                     background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 30%, transparent 100%)',
                   }}
                 />
-                
+
                 <motion.div
                   className="absolute inset-0 z-20"
                   style={{
@@ -1366,7 +1374,7 @@ export default function InicioPage() {
                   }}
                   transition={{ duration: 0.3 }}
                 />
-                
+
                 <motion.div
                   className="absolute bottom-0 left-0 right-0 h-2 z-30"
                   style={{
@@ -1379,7 +1387,7 @@ export default function InicioPage() {
                   }}
                   transition={{ duration: 0.3 }}
                 />
-                
+
                 <div className="absolute inset-0 z-30 flex flex-col justify-end items-center p-6 text-white text-center">
                   <motion.h3
                     className="font-jh-caudemars text-2xl md:text-3xl mb-4 text-center w-full"
@@ -1390,7 +1398,7 @@ export default function InicioPage() {
                   >
                     Sexualidade Humana
                   </motion.h3>
-                  
+
                   <motion.div
                     className="font-neue-montreal text-sm md:text-base"
                     animate={{
@@ -1421,7 +1429,7 @@ export default function InicioPage() {
         }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat sm:bg-[length:170%]"
           style={{
             backgroundImage: 'url(/fundo2.svg)',
@@ -1432,9 +1440,9 @@ export default function InicioPage() {
           <h2 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-gray-900 mb-8 sm:mb-12 md:mb-16 lg:mb-20 text-center">
             Formações e Cursos Profissionais
           </h2>
-          
+
           {/* Carrossel 3D */}
-          <div 
+          <div
             className="relative w-full"
             style={{ perspective: '1000px', minHeight: '400px', paddingBottom: '4rem' }}
           >
@@ -1470,7 +1478,7 @@ export default function InicioPage() {
                 const isActive = position === 0
                 const isLeft = position === total - 1
                 const isRight = position === 1
-                
+
                 // Calcular transformações baseadas na posição - Efeito Jukebox
                 let rotateY = 0
                 let scale = 1
@@ -1479,7 +1487,7 @@ export default function InicioPage() {
                 let x = 0
                 let y = 0
                 let blur = 0
-                
+
                 if (isActive) {
                   // Card ativo: centralizado, tamanho normal, totalmente opaco, na frente
                   rotateY = 0
@@ -1514,7 +1522,7 @@ export default function InicioPage() {
                   y = 0
                   blur = 0
                 }
-                
+
                 return (
                   <motion.div
                     key={formacao.id}
@@ -1554,7 +1562,7 @@ export default function InicioPage() {
                       },
                     }}
                   >
-                    <div 
+                    <div
                       className="w-full h-full bg-[#f56428] rounded-lg overflow-hidden shadow-2xl flex flex-col md:flex-row"
                       style={{
                         filter: `blur(${blur}px)`,
@@ -1570,7 +1578,7 @@ export default function InicioPage() {
                           sizes="(max-width: 768px) 100vw, 50vw"
                         />
                       </div>
-                      
+
                       {/* Conteúdo à direita */}
                       <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center p-6 md:p-8 lg:p-12 text-white pb-10 md:pb-8 items-center md:items-start">
                         <h3 className="font-jh-caudemars text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-6 text-center md:text-left">
@@ -1579,7 +1587,7 @@ export default function InicioPage() {
                         <p className="font-neue-montreal text-sm md:text-base lg:text-lg whitespace-pre-line text-center md:text-left mb-6">
                           {formacao.text}
                         </p>
-                        
+
                         {/* Botão Contrate */}
                         <motion.button
                           className="font-neue-montreal text-white px-6 py-3.5 md:px-8 md:py-4 rounded-lg text-sm md:text-base lg:text-lg font-medium relative overflow-hidden w-full md:w-fit md:self-start text-center min-h-[48px] md:min-h-0"
@@ -1616,7 +1624,7 @@ export default function InicioPage() {
                 )
               })}
             </div>
-            
+
             {/* Setas de navegação */}
             <button
               onClick={() => setCurrentFormacao((prev) => (prev - 1 + 4) % 4)}
@@ -1632,7 +1640,7 @@ export default function InicioPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            
+
             <button
               onClick={() => setCurrentFormacao((prev) => (prev + 1) % 4)}
               className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-30 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full p-2 sm:p-3 md:p-4 transition-all duration-200 shadow-lg hover:scale-110"
@@ -1648,7 +1656,7 @@ export default function InicioPage() {
               </svg>
             </button>
           </div>
-          
+
           {/* Bolinhas de navegação */}
           <div className="flex justify-center gap-2 sm:gap-3 mt-6 sm:mt-8">
             {[0, 1, 2, 3].map((index) => (
@@ -1676,7 +1684,7 @@ export default function InicioPage() {
       </motion.section>
 
       {/* Seção Estatísticas da Prática Clínica */}
-      <section 
+      <section
         ref={statsRef}
         className="w-full bg-[#70309e] py-12 sm:py-16 md:py-24 min-h-[300px] sm:min-h-[400px] flex items-center"
       >
@@ -1684,7 +1692,7 @@ export default function InicioPage() {
           <h2 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white mb-8 sm:mb-12 md:mb-16 text-center">
             Estatísticas da Prática Clínica
           </h2>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {/* Mulheres Tratadas */}
             <div className="flex flex-col items-center text-center w-full max-w-full px-4 py-6 rounded-lg">
@@ -1807,7 +1815,7 @@ export default function InicioPage() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 3.8, opacity: 0.6, y: -30 }}
               exit={{ scale: 0, opacity: 0 }}
-              transition={{ 
+              transition={{
                 type: "spring",
                 stiffness: 150,
                 damping: 20,
@@ -1815,15 +1823,15 @@ export default function InicioPage() {
               }}
               style={{ filter: 'blur(2px)' }}
             >
-              <div 
+              <div
                 style={{
                   filter: 'brightness(0) saturate(100%) invert(64%) sepia(93%) saturate(2800%) hue-rotate(349deg) brightness(96%) contrast(96%)',
                   mixBlendMode: 'multiply'
                 }}
                 className="w-full h-full"
               >
-                <Lottie 
-                  animationData={bookAnimation} 
+                <Lottie
+                  animationData={bookAnimation}
                   loop={true}
                   style={{ width: '100%', height: '100%' }}
                 />
@@ -1840,7 +1848,7 @@ export default function InicioPage() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 3, opacity: 0.6 }}
               exit={{ scale: 0, opacity: 0 }}
-              transition={{ 
+              transition={{
                 type: "spring",
                 stiffness: 150,
                 damping: 20,
@@ -1848,13 +1856,13 @@ export default function InicioPage() {
               }}
               style={{ filter: 'blur(2px)' }}
             >
-              <div 
+              <div
                 style={{
                   filter: 'brightness(0) saturate(100%) invert(64%) sepia(93%) saturate(2800%) hue-rotate(349deg) brightness(96%) contrast(96%)'
                 }}
               >
-                <Lottie 
-                  animationData={documentAnimation} 
+                <Lottie
+                  animationData={documentAnimation}
                   loop={true}
                   style={{ width: '100%', height: '100%' }}
                 />
@@ -1871,7 +1879,7 @@ export default function InicioPage() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: isMobile ? 1.5 : 0.8, opacity: 0.6 }}
               exit={{ scale: 0, opacity: 0 }}
-              transition={{ 
+              transition={{
                 type: "spring",
                 stiffness: 150,
                 damping: 20,
@@ -1879,13 +1887,13 @@ export default function InicioPage() {
               }}
               style={{ filter: 'blur(4px)' }}
             >
-              <div 
+              <div
                 style={{
                   filter: 'brightness(0) saturate(100%) invert(64%) sepia(93%) saturate(2800%) hue-rotate(349deg) brightness(96%) contrast(96%)'
                 }}
               >
-                <Lottie 
-                  animationData={videoAnimation} 
+                <Lottie
+                  animationData={videoAnimation}
                   loop={true}
                   style={{ width: '100%', height: '100%' }}
                 />
@@ -1907,7 +1915,7 @@ export default function InicioPage() {
             {/* Botões - Lado Direito */}
             <div className="flex-1 flex flex-col gap-4 sm:gap-6 w-full lg:w-auto justify-center">
               {/* E-books */}
-              <div 
+              <div
                 ref={ebookButtonRef}
                 className="relative w-full lg:w-64"
                 style={{ perspective: '1000px', zIndex: 10 }}
@@ -1945,7 +1953,7 @@ export default function InicioPage() {
                     pointerEvents: 'none'
                   }}
                   animate={{ rotateX: (hoveredRecurso === 'ebook' || openRecurso === 'ebook') ? 360 : 0 }}
-                  transition={{ 
+                  transition={{
                     type: "spring",
                     stiffness: 300,
                     damping: 20,
@@ -1963,25 +1971,25 @@ export default function InicioPage() {
                       transition={{ duration: 0.4, ease: 'easeInOut' }}
                     />
                   </div>
-                <motion.span 
-                  className="relative z-10 font-neue-montreal text-white text-lg font-medium block w-full text-left"
-                  animate={{ 
-                    opacity: (hoveredRecurso === 'ebook' || openRecurso === 'ebook') ? 0 : 1 
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  E-books
-                </motion.span>
-                <motion.span 
-                  className="absolute inset-0 flex items-center px-6 font-neue-montreal text-white text-lg font-medium z-10"
-                  initial={{ opacity: 0 }}
-                  animate={{ 
-                    opacity: (hoveredRecurso === 'ebook' || openRecurso === 'ebook') ? 1 : 0 
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Descarregar
-                </motion.span>
+                  <motion.span
+                    className="relative z-10 font-neue-montreal text-white text-lg font-medium block w-full text-left"
+                    animate={{
+                      opacity: (hoveredRecurso === 'ebook' || openRecurso === 'ebook') ? 0 : 1
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    E-books
+                  </motion.span>
+                  <motion.span
+                    className="absolute inset-0 flex items-center px-6 font-neue-montreal text-white text-lg font-medium z-10"
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: (hoveredRecurso === 'ebook' || openRecurso === 'ebook') ? 1 : 0
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Descarregar
+                  </motion.span>
                   <svg
                     className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white z-10 sm:hidden"
                     fill="none"
@@ -1994,7 +2002,7 @@ export default function InicioPage() {
               </div>
 
               {/* Artigos e Guias */}
-              <div 
+              <div
                 ref={artigosButtonRef}
                 className="relative w-full lg:w-64"
                 style={{ perspective: '1000px', zIndex: 10 }}
@@ -2032,7 +2040,7 @@ export default function InicioPage() {
                     pointerEvents: 'none'
                   }}
                   animate={{ rotateX: (hoveredRecurso === 'artigos' || openRecurso === 'artigos') ? 360 : 0 }}
-                  transition={{ 
+                  transition={{
                     type: "spring",
                     stiffness: 300,
                     damping: 20,
@@ -2050,25 +2058,25 @@ export default function InicioPage() {
                       transition={{ duration: 0.4, ease: 'easeInOut' }}
                     />
                   </div>
-                <motion.span 
-                  className="relative z-10 font-neue-montreal text-white text-lg font-medium block w-full text-left"
-                  animate={{ 
-                    opacity: (hoveredRecurso === 'artigos' || openRecurso === 'artigos') ? 0 : 1 
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Artigos e Guias
-                </motion.span>
-                <motion.span 
-                  className="absolute inset-0 flex items-center px-6 font-neue-montreal text-white text-lg font-medium z-10"
-                  initial={{ opacity: 0 }}
-                  animate={{ 
-                    opacity: (hoveredRecurso === 'artigos' || openRecurso === 'artigos') ? 1 : 0 
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Descarregar
-                </motion.span>
+                  <motion.span
+                    className="relative z-10 font-neue-montreal text-white text-lg font-medium block w-full text-left"
+                    animate={{
+                      opacity: (hoveredRecurso === 'artigos' || openRecurso === 'artigos') ? 0 : 1
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Artigos e Guias
+                  </motion.span>
+                  <motion.span
+                    className="absolute inset-0 flex items-center px-6 font-neue-montreal text-white text-lg font-medium z-10"
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: (hoveredRecurso === 'artigos' || openRecurso === 'artigos') ? 1 : 0
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Descarregar
+                  </motion.span>
                   <svg
                     className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white z-10 sm:hidden"
                     fill="none"
@@ -2081,7 +2089,7 @@ export default function InicioPage() {
               </div>
 
               {/* Vídeos Educativos */}
-              <div 
+              <div
                 ref={videosButtonRef}
                 className="relative w-full lg:w-64"
                 style={{ perspective: '1000px', zIndex: 10 }}
@@ -2119,7 +2127,7 @@ export default function InicioPage() {
                     pointerEvents: 'none'
                   }}
                   animate={{ rotateX: (hoveredRecurso === 'videos' || openRecurso === 'videos') ? 360 : 0 }}
-                  transition={{ 
+                  transition={{
                     type: "spring",
                     stiffness: 300,
                     damping: 20,
@@ -2137,25 +2145,25 @@ export default function InicioPage() {
                       transition={{ duration: 0.4, ease: 'easeInOut' }}
                     />
                   </div>
-                <motion.span 
-                  className="relative z-10 font-neue-montreal text-white text-lg font-medium block w-full text-left"
-                  animate={{ 
-                    opacity: (hoveredRecurso === 'videos' || openRecurso === 'videos') ? 0 : 1 
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Vídeos Educativos
-                </motion.span>
-                <motion.span 
-                  className="absolute inset-0 flex items-center px-6 font-neue-montreal text-white text-lg font-medium z-10"
-                  initial={{ opacity: 0 }}
-                  animate={{ 
-                    opacity: (hoveredRecurso === 'videos' || openRecurso === 'videos') ? 1 : 0 
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Descarregar
-                </motion.span>
+                  <motion.span
+                    className="relative z-10 font-neue-montreal text-white text-lg font-medium block w-full text-left"
+                    animate={{
+                      opacity: (hoveredRecurso === 'videos' || openRecurso === 'videos') ? 0 : 1
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Vídeos Educativos
+                  </motion.span>
+                  <motion.span
+                    className="absolute inset-0 flex items-center px-6 font-neue-montreal text-white text-lg font-medium z-10"
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: (hoveredRecurso === 'videos' || openRecurso === 'videos') ? 1 : 0
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Descarregar
+                  </motion.span>
                   <svg
                     className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white z-10 sm:hidden"
                     fill="none"
@@ -2189,10 +2197,10 @@ export default function InicioPage() {
             y: typewriterParallaxY,
           }}
         />
-        
+
         {/* Overlay roxo escuro */}
         <div className="absolute inset-0 bg-[#70309e]/70" />
-        
+
         {/* Conteúdo */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center min-h-[100px] sm:min-h-[150px] md:min-h-[250px] lg:min-h-[300px]">
@@ -2231,7 +2239,7 @@ export default function InicioPage() {
           <h2 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-gray-900 mb-8 sm:mb-12 md:mb-16 text-center">
             Perguntas Frequentes
           </h2>
-          
+
           <div className="space-y-4">
             {[
               {
@@ -2290,7 +2298,7 @@ export default function InicioPage() {
               }
             ].map((faq) => {
               const isOpen = openFaq === faq.id
-              
+
               return (
                 <div
                   key={faq.id}
@@ -2300,7 +2308,7 @@ export default function InicioPage() {
                     onClick={() => setOpenFaq(isOpen ? null : faq.id)}
                     className="w-full px-6 py-4 sm:px-8 sm:py-5 flex items-center gap-4 text-left hover:bg-gray-50 transition-colors duration-200"
                   >
-                    <motion.div 
+                    <motion.div
                       className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg flex items-center justify-center"
                       animate={{
                         backgroundColor: isOpen ? '#f56428' : '#70309e',
@@ -2346,14 +2354,14 @@ export default function InicioPage() {
                       </svg>
                     </motion.div>
                   </button>
-                  
+
                   <motion.div
                     initial={false}
                     animate={{
                       height: isOpen ? 'auto' : 0,
                       opacity: isOpen ? 1 : 0,
                     }}
-                    transition={{ 
+                    transition={{
                       height: { duration: 0.4, ease: [0.4, 0, 0.2, 1] },
                       opacity: { duration: 0.3, ease: [0.4, 0, 0.2, 1] }
                     }}
@@ -2384,7 +2392,7 @@ export default function InicioPage() {
         }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
-        <div 
+        <div
           className="absolute inset-0 opacity-100"
           style={{
             backgroundImage: 'url(/fundo2.svg)',
@@ -2397,12 +2405,12 @@ export default function InicioPage() {
           <h2 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white mb-8 sm:mb-12 md:mb-16 text-center">
             Contato
           </h2>
-          
-          <form 
+
+          <form
             onSubmit={(e) => {
               e.preventDefault()
               const errors: Record<string, string> = {}
-              
+
               if (!formData.nome.trim()) errors.nome = 'Nome é obrigatório'
               if (!formData.email.trim()) errors.email = 'E-mail é obrigatório'
               else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -2411,9 +2419,9 @@ export default function InicioPage() {
               if (!formData.telefone.trim()) errors.telefone = 'Telefone é obrigatório'
               if (!formData.tipoConsulta) errors.tipoConsulta = 'Tipo de consulta é obrigatório'
               if (!formData.mensagem.trim()) errors.mensagem = 'Mensagem é obrigatória'
-              
+
               setFormErrors(errors)
-              
+
               if (Object.keys(errors).length === 0) {
                 setIsSubmitting(true)
                 setTimeout(() => {
@@ -2440,9 +2448,8 @@ export default function InicioPage() {
                 id="nome"
                 value={formData.nome}
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${
-                  formErrors.nome ? 'border-red-500' : 'border-white/20'
-                } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors`}
+                className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${formErrors.nome ? 'border-red-500' : 'border-white/20'
+                  } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors`}
                 placeholder="Seu nome completo"
               />
               {formErrors.nome && (
@@ -2459,9 +2466,8 @@ export default function InicioPage() {
                 id="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${
-                  formErrors.email ? 'border-red-500' : 'border-white/20'
-                } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors`}
+                className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${formErrors.email ? 'border-red-500' : 'border-white/20'
+                  } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors`}
                 placeholder="seu@email.com"
               />
               {formErrors.email && (
@@ -2481,9 +2487,8 @@ export default function InicioPage() {
                   const formatted = formatarTelefonePortugal(e.target.value)
                   setFormData({ ...formData, telefone: formatted })
                 }}
-                className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${
-                  formErrors.telefone ? 'border-red-500' : 'border-white/20'
-                } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors`}
+                className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${formErrors.telefone ? 'border-red-500' : 'border-white/20'
+                  } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors`}
                 placeholder="+351 912 345 678"
               />
               {formErrors.telefone && (
@@ -2509,19 +2514,18 @@ export default function InicioPage() {
                       onChange={(e) => setFormData({ ...formData, tipoConsulta: e.target.value })}
                       className="sr-only"
                     />
-                    <div className={`relative w-6 h-6 rounded border-2 ${
-                      formData.tipoConsulta === tipo 
-                        ? 'border-[#70309e] bg-[#70309e]' 
-                        : 'border-white/40 bg-white/10'
-                    } transition-all duration-200 flex items-center justify-center mr-3 group-hover:border-white/60`}>
+                    <div className={`relative w-6 h-6 rounded border-2 ${formData.tipoConsulta === tipo
+                      ? 'border-[#70309e] bg-[#70309e]'
+                      : 'border-white/40 bg-white/10'
+                      } transition-all duration-200 flex items-center justify-center mr-3 group-hover:border-white/60`}>
                       {formData.tipoConsulta === tipo && (
-                        <svg 
-                          className="w-4 h-4 text-white" 
-                          fill="none" 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth="3" 
-                          viewBox="0 0 24 24" 
+                        <svg
+                          className="w-4 h-4 text-white"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
+                          viewBox="0 0 24 24"
                           stroke="currentColor"
                         >
                           <path d="M5 13l4 4L19 7"></path>
@@ -2546,9 +2550,8 @@ export default function InicioPage() {
                 value={formData.mensagem}
                 onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                 rows={6}
-                className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${
-                  formErrors.mensagem ? 'border-red-500' : 'border-white/20'
-                } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors resize-none`}
+                className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${formErrors.mensagem ? 'border-red-500' : 'border-white/20'
+                  } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors resize-none`}
                 placeholder="Escreva sua mensagem..."
               />
               {formErrors.mensagem && (
@@ -2568,7 +2571,7 @@ export default function InicioPage() {
               <motion.div
                 className="absolute inset-0 rounded-lg"
                 style={{
-                  background: isEnviarHovered 
+                  background: isEnviarHovered
                     ? `linear-gradient(135deg, #70309e 0%, #f56428 100%)`
                     : '#70309e'
                 }}
@@ -2631,11 +2634,11 @@ export default function InicioPage() {
       </div>
 
       {/* Footer */}
-      <footer 
+      <footer
         ref={footerRef}
         className="relative w-full bg-[#70309e] py-12 sm:py-16 md:py-20 overflow-hidden"
       >
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             backgroundImage: 'url(/patternrosa.svg)',
@@ -2644,7 +2647,7 @@ export default function InicioPage() {
             backgroundPosition: `${50 + (smoothPosition.x - 50) * 0.1}% ${50 + (smoothPosition.y - 50) * 0.1}%`,
           }}
         />
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             background: 'linear-gradient(to right, rgba(112, 48, 158, 0) 0%, rgba(112, 48, 158, 0.9) 30%, rgba(112, 48, 158, 0.9) 70%, rgba(112, 48, 158, 0) 100%)',
@@ -2667,7 +2670,7 @@ export default function InicioPage() {
             <nav className="flex items-center justify-center flex-wrap gap-4 sm:gap-6 lg:gap-8">
               {menuItems.map((item) => {
                 const isHovered = hoveredFooterItem === item
-                
+
                 return (
                   <button
                     key={item}
@@ -2681,7 +2684,7 @@ export default function InicioPage() {
                     onClick={() => scrollToSection(item)}
                   >
                     {item}
-                    
+
                     {/* Linha laranja animada */}
                     <motion.div
                       className="absolute bottom-0 left-1/2 h-0.5"

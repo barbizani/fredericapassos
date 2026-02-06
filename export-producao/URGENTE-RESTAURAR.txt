@@ -1,0 +1,73 @@
+╔══════════════════════════════════════════════════════════════╗
+║  🚨 RESTAURAR SITE DESCONFIGURADO                           ║
+╚══════════════════════════════════════════════════════════════╝
+
+Se você executou o SQL e o site desconfigurou, siga estes passos:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PASSO 1: Limpar o JSON Corrompido
+──────────────────────────────────
+
+1. Acesse phpMyAdmin no cPanel
+2. Selecione o banco de dados do WordPress
+3. Aba SQL
+4. Execute este comando:
+
+   UPDATE wp_postmeta 
+   SET meta_value = '' 
+   WHERE post_id = 11 AND meta_key = '_elementor_data';
+
+5. Limpe o cache:
+
+   DELETE FROM wp_options WHERE option_name LIKE '_transient_elementor%';
+   DELETE FROM wp_options WHERE option_name LIKE '_transient_timeout_elementor%';
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PASSO 2: Restaurar via Script PHP (MÉTODO MAIS FÁCIL)
+──────────────────────────────────────────────────────
+
+1. Via File Manager ou FTP, faça upload de:
+   - `importar-via-php.php` → para: `public_html/cpanel/`
+   - `elementor-data.json` → para: `public_html/cpanel/` (mesma pasta)
+
+2. Acesse no navegador:
+   https://fredericapassos.pt/cpanel/importar-via-php.php
+
+3. Faça login no WordPress (se pedir)
+
+4. O script vai importar automaticamente!
+
+5. Depois de ver a mensagem de sucesso:
+   - Delete o arquivo `importar-via-php.php` por segurança
+   - Acesse: WordPress Admin → Páginas → Home → Editar com Elementor
+   - Clique em "Atualizar" para salvar
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ALTERNATIVA: Se não tiver botão "Importar Template" no Elementor
+────────────────────────────────────────────────────────────────
+
+Veja o arquivo: COMO-IMPORTAR-SEM-BOTAO.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PASSO 3: Limpar Cache
+─────────────────────
+
+1. WordPress Admin → Elementor → Tools → Regenerate CSS
+2. Clique em: "Regenerate Files & Data"
+3. Limpe cache do navegador (Ctrl+F5 ou Cmd+Shift+R)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ IMPORTANTE:
+
+- NÃO use SQL para importar JSON do Elementor!
+- Use sempre o método via WordPress Admin → Elementor
+- O arquivo SQL foi criado apenas como referência, mas pode causar problemas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 Para mais detalhes, veja: SOLUCAO-SEGURA.md

@@ -1,0 +1,13 @@
+ARQUIVOS ESSENCIAIS PARA UPLOAD:
+
+✅ TODOS os arquivos da pasta wordpress/
+✅ Especialmente importante:
+   - wp-content/themes/frederica-passos/ (tema completo)
+   - wp-content/plugins/ (se houver plugins instalados)
+   - wp-content/uploads/ (imagens e mídia)
+   - Todos os arquivos .php na raiz
+
+⚠️ NÃO enviar:
+   - wp-config.php (criar novo no servidor)
+   - .htaccess (será criado automaticamente ou usar o fornecido)
+   - Arquivos de cache
