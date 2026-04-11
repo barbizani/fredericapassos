@@ -174,6 +174,15 @@ export default function InicioPage() {
     setActiveSection(sectionName)
   }
 
+  const handleWhatsApp = (type: 'agendamento' | 'orcamento' = 'agendamento') => {
+    const number = "351963564444"
+    const message = type === 'agendamento' 
+      ? "Olá Dra. Frederica, vim do seu site e gostaria de agendar uma consulta de psiquiatria."
+      : "Olá Dra. Frederica, gostaria de conversar sobre um orçamento dos seus serviços."
+    
+    window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, '_blank')
+  }
+
   // Função para scroll suave ao topo
   const scrollToTop = () => {
     window.scrollTo({
@@ -583,6 +592,7 @@ export default function InicioPage() {
                 }}
                 onHoverStart={() => setIsAgendeHovered(true)}
                 onHoverEnd={() => setIsAgendeHovered(false)}
+                onClick={() => handleWhatsApp('agendamento')}
                 whileHover={{ scale: 1.05 }}
                 transition={{
                   duration: 0.3,
@@ -845,6 +855,7 @@ export default function InicioPage() {
                               }}
                               onHoverStart={() => setIsContrateHovered(true)}
                               onHoverEnd={() => setIsContrateHovered(false)}
+                              onClick={() => handleWhatsApp('orcamento')}
                               whileHover={{ scale: 1.05 }}
                               transition={{
                                 duration: 0.3,
@@ -864,7 +875,7 @@ export default function InicioPage() {
                                   ease: 'easeInOut',
                                 }}
                               />
-                              <span className="relative z-10">Contrate</span>
+                              <span className="relative z-10">Entre em contato</span>
                             </motion.button>
                           </div>
                         </div>
@@ -1597,6 +1608,7 @@ export default function InicioPage() {
                           }}
                           onHoverStart={() => setHoveredContrateFormacao(formacao.id)}
                           onHoverEnd={() => setHoveredContrateFormacao(null)}
+                          onClick={() => handleWhatsApp('orcamento')}
                           whileHover={{ scale: 1.05 }}
                           transition={{
                             duration: 0.3,
@@ -1616,7 +1628,7 @@ export default function InicioPage() {
                               ease: 'easeInOut',
                             }}
                           />
-                          <span className="relative z-10">Contrate</span>
+                          <span className="relative z-10">Entre em contato</span>
                         </motion.button>
                       </div>
                     </div>
@@ -2407,7 +2419,7 @@ export default function InicioPage() {
           </h2>
 
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault()
               const errors: Record<string, string> = {}
 
@@ -2424,9 +2436,20 @@ export default function InicioPage() {
 
               if (Object.keys(errors).length === 0) {
                 setIsSubmitting(true)
-                setTimeout(() => {
-                  setIsSubmitting(false)
-                  alert('Formulário enviado com sucesso!')
+                
+                try {
+                  // URL do seu Google Apps Script ativa
+                  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwLphRoGmFg8MYGu3_2DaehdU9-H3HdqT0AWrCLRUySOWtB9NZRUKrrANdWwKbi9volgg/exec' 
+                  
+                  await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Necessário para Google Apps Script
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                  })
+
+                  alert('Formulário enviado com sucesso! Entraremos em contacto em breve.')
                   setFormData({
                     nome: '',
                     email: '',
@@ -2434,7 +2457,12 @@ export default function InicioPage() {
                     tipoConsulta: '',
                     mensagem: ''
                   })
-                }, 1000)
+                } catch (error) {
+                  console.error('Erro ao enviar formulário:', error)
+                  alert('Ocorreu um erro ao enviar. Por favor, tente novamente ou contacte-nos via WhatsApp.')
+                } finally {
+                  setIsSubmitting(false)
+                }
               }
             }}
             className="space-y-6"
@@ -2717,6 +2745,7 @@ export default function InicioPage() {
                 }}
                 onHoverStart={() => setIsAgendeHovered(true)}
                 onHoverEnd={() => setIsAgendeHovered(false)}
+                onClick={() => handleWhatsApp('agendamento')}
                 whileHover={{ scale: 1.05 }}
                 transition={{
                   duration: 0.3,
@@ -2795,6 +2824,17 @@ export default function InicioPage() {
                   />
                 </div>
               </motion.button>
+            </div>
+
+            {/* Copyright and Legal Links */}
+            <div className="pt-8 border-t border-white/10 w-full flex flex-col items-center gap-4">
+              <div className="text-white/40 text-sm text-center font-nord">
+                © 2026 Dra. Frederica Passos - Mentes Modernas. Todos os direitos reservados.®
+              </div>
+              <div className="flex gap-6 text-white/40 text-xs font-nord uppercase tracking-widest">
+                <button className="hover:text-white transition-colors">Termos & Condições</button>
+                <button className="hover:text-white transition-colors">Política de Privacidade</button>
+              </div>
             </div>
           </div>
         </div>
