@@ -9,6 +9,13 @@ import bookAnimation from '../../public/bookat2.json'
 import documentAnimation from '../../public/Document.json'
 import videoAnimation from '../../public/video.json'
 
+// Frases para o typewriter
+const phrases = [
+  'Diagnóstico: Ser Humano.',
+  'Tá Tudo Bem não Estar Bem.',
+  'Cuidar da Mente é Revolucionário.'
+]
+
 export default function InicioPage() {
   const router = useRouter()
   const [isAgendeHovered, setIsAgendeHovered] = useState(false)
@@ -276,13 +283,6 @@ export default function InicioPage() {
     }
   }, [mousePosition])
 
-  // Frases para o typewriter
-  const phrases = [
-    'Diagnóstico: Ser Humano.',
-    'Tá Tudo Bem não Estar Bem.',
-    'Cuidar da Mente é Revolucionário.'
-  ]
-
   // Efeito typewriter
   useEffect(() => {
     const currentPhrase = phrases[currentPhraseIndex]
@@ -348,13 +348,14 @@ export default function InicioPage() {
       { threshold: 0.3 }
     )
 
-    if (statsRef.current) {
-      observer.observe(statsRef.current)
+    const currentStatsRef = statsRef.current
+    if (currentStatsRef) {
+      observer.observe(currentStatsRef)
     }
 
     return () => {
-      if (statsRef.current) {
-        observer.unobserve(statsRef.current)
+      if (currentStatsRef) {
+        observer.unobserve(currentStatsRef)
       }
     }
   }, [statsVisible])
