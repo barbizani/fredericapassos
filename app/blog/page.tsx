@@ -246,14 +246,15 @@ export default function BlogPage() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
                                 whileHover={{ y: -10 }}
-                                className="bg-white rounded-2xl overflow-hidden shadow-lg border border-[#70309e]/5"
+                                onClick={() => router.push(`/blog/${post.slug}`)}
+                                className="bg-white rounded-2xl overflow-hidden shadow-lg border border-[#70309e]/5 cursor-pointer group"
                             >
-                                <div className="relative h-64 w-full">
+                                <div className="relative h-64 w-full overflow-hidden">
                                     <Image
                                         src={post.image}
                                         alt={post.title}
                                         fill
-                                        className="object-cover"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                     <div className="absolute top-4 left-4">
                                         <span className="bg-[#f56428] text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
@@ -263,15 +264,15 @@ export default function BlogPage() {
                                 </div>
                                 <div className="p-6">
                                     <span className="text-gray-400 text-sm font-neue-montreal mb-2 block">{post.date}</span>
-                                    <h3 className="font-jh-caudemars text-2xl text-[#70309e] mb-4 line-clamp-2 leading-tight">
+                                    <h3 className="font-jh-caudemars text-2xl text-[#70309e] mb-4 line-clamp-2 leading-tight group-hover:text-[#f56428] transition-colors">
                                         {post.title}
                                     </h3>
                                     <p className="font-neue-montreal text-gray-600 mb-6 line-clamp-3">
                                         {post.excerpt}
                                     </p>
-                                    <button className="text-[#f56428] font-bold font-neue-montreal flex items-center gap-2 group">
+                                    <button className="text-[#f56428] font-bold font-neue-montreal flex items-center gap-2 group/btn">
                                         Ler mais
-                                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                         </svg>
                                     </button>
