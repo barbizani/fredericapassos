@@ -11,7 +11,7 @@
             <div class="flex-shrink-0 z-10">
                 <a href="<?php echo home_url(); ?>">
                     <img src="<?php echo get_template_directory_uri(); ?>/images/logohoriz.svg"
-                         alt="Logo Dra. Frederica Passos"
+                         alt="Logo Dra Frederica Passos"
                          class="h-10 md:h-12 w-auto object-contain">
                 </a>
             </div>

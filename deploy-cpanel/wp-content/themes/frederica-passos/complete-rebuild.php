@@ -99,7 +99,7 @@ $page_content = '
                     </h2>
                     <div class="space-y-4 sm:space-y-6 text-gray-700 text-sm sm:text-base md:text-lg">
                         <p class="font-neue-montreal leading-relaxed" style="font-family: Neue Montreal;">
-                            <strong>Dra. Frederica Passos Barbizani</strong> é psiquiatra especializada em Saúde Mental da Mulher. Com foco no universo feminino, acredita que toda mulher merece cuidados de saúde mental que respeitem suas particularidades biológicas, psicológicas e sociais.
+                            <strong>Dra Frederica Passos Barbizani</strong> é psiquiatra especializada em Saúde Mental da Mulher. Com foco no universo feminino, acredita que toda mulher merece cuidados de saúde mental que respeitem suas particularidades biológicas, psicológicas e sociais.
                         </p>
                         <p class="font-neue-montreal leading-relaxed" style="font-family: Neue Montreal;">
                             Especializou-se em Psiquiatria no Hospital Beatriz Ângelo, com foco em Psiquiatria da Mulher e Psiquiatria Perinatal. Sua prática clínica baseia-se em pilares fundamentais: cuidado humanizado, evidência científica, abordagem integral e empoderamento da paciente. Dedica-se também à investigação científica, com interesse particular em perturbações do humor no período perinatal, impacto hormonal na saúde mental, sexualidade, identidade de género, competências parentais e dinâmicas familiares.
@@ -109,7 +109,7 @@ $page_content = '
                 <!-- Imagem -->
                 <div class="flex-1 lg:flex-[1.5] w-full lg:w-auto">
                     <div class="relative w-full aspect-[3/4] lg:aspect-[4/5]">
-                        <img src="/wp-content/uploads/fotofrederica.webp" alt="Dra. Frederica Passos Barbizani" class="object-cover rounded-lg w-full h-full" />
+                        <img src="/wp-content/uploads/fotofrederica.webp" alt="Dra Frederica Passos Barbizani" class="object-cover rounded-lg w-full h-full" />
                     </div>
                 </div>
             </div>

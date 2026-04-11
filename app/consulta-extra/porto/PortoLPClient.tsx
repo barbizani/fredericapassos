@@ -8,8 +8,8 @@ import SignatureCard from '../../../components/lp/SignatureCard'
 
 export default function PortoLandingPage() {
   const symptoms = [
-    'Ansiedade e Depressão',
-    'Esgotamento',
+    'Ansiedade',
+    'Depressão',
     'PHDA Adulto',
     'Psiquiatria da Mulher',
     'Psiquiatria Perinatal',
@@ -43,10 +43,10 @@ export default function PortoLandingPage() {
           <div className="pt-4">
             <WhatsAppButton 
               number="+351963564444" 
-              message="Olá Dra. Frederica, gostaria de agendar uma CONSULTA EXTRA."
+              message="Olá Dra Frederica, gostaria de agendar uma CONSULTA EXTRA."
             />
             <p className="mt-4 text-sm text-[#161616]/50">
-              * Resposta rápida via WhatsApp. Agende agora para garantir sua vaga.
+              * Resposta rápida via WhatsApp. Agende agora para garantir a sua vaga.
             </p>
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function PortoLandingPage() {
           <div className="relative rounded-3xl overflow-hidden shadow-2xl">
             <Image
               src="/Foto_atendimento.jpeg"
-              alt="Dra. Frederica Passos"
+              alt="Dra Frederica Passos"
               width={600}
               height={800}
               className="w-full h-auto object-cover"
@@ -96,11 +96,11 @@ export default function PortoLandingPage() {
         <div className="flex-1 space-y-6">
           <h2 className="text-3xl font-jh-caudemars">Mentes que não cabem em rótulos.</h2>
           <p className="text-lg text-[#161616]/70 leading-relaxed">
-            Sou a <strong>Dra. Frederica Passos</strong>, médica psiquiatra dedicada a uma abordagem contemporânea e humana. 
+            Sou a <strong>Dra Frederica Passos</strong>, médica psiquiatra dedicada a uma abordagem contemporânea e humana. 
             Acredito que a saúde mental deve ser acessível e adaptada à rotina de quem busca equilíbrio, sem estigmas.
           </p>
           <p className="text-lg text-[#161616]/70 leading-relaxed">
-            Minha agenda presencial está frequentemente lotada, por isso priorizo a teleconsulta para oferecer agilidade e a mesma qualidade de acolhimento.
+            A minha agenda presencial está frequentemente lotada, por isso priorizo a teleconsulta para oferecer agilidade e a mesma qualidade de acolhimento.
           </p>
         </div>
         <div className="w-full md:w-auto mt-4">
@@ -111,7 +111,7 @@ export default function PortoLandingPage() {
       <div className="py-12 text-center">
          <WhatsAppButton 
               number="+351963564444" 
-              message="Olá Dra. Frederica, gostaria de agendar uma CONSULTA EXTRA."
+              message="Olá Dra Frederica, gostaria de agendar uma CONSULTA EXTRA."
               variant="glow"
             />
       </div>

@@ -324,7 +324,7 @@ $elementor_data[] = [
                             'elType' => 'widget',
                             'widgetType' => 'text-editor',
                             'settings' => [
-                                'editor' => '<p style="font-family: \'Neue Montreal\', sans-serif; font-size: 18px; line-height: 1.6; color: #6b7280; margin-bottom: 24px;"><strong>Dra. Frederica Passos Barbizani</strong> é psiquiatra especializada em Saúde Mental da Mulher. Com foco no universo feminino, acredita que toda mulher merece cuidados de saúde mental que respeitem suas particularidades biológicas, psicológicas e sociais.</p><p style="font-family: \'Neue Montreal\', sans-serif; font-size: 18px; line-height: 1.6; color: #6b7280;">Especializou-se em Psiquiatria no Hospital Beatriz Ângelo, com foco em Psiquiatria da Mulher e Psiquiatria Perinatal. Sua prática clínica baseia-se em pilares fundamentais: cuidado humanizado, evidência científica, abordagem integral e empoderamento da paciente. Dedica-se também à investigação científica, com interesse particular em perturbações do humor no período perinatal, impacto hormonal na saúde mental, sexualidade, identidade de género, competências parentais e dinâmicas familiares.</p>',
+                                'editor' => '<p style="font-family: \'Neue Montreal\', sans-serif; font-size: 18px; line-height: 1.6; color: #6b7280; margin-bottom: 24px;"><strong>Dra Frederica Passos Barbizani</strong> é psiquiatra especializada em Saúde Mental da Mulher. Com foco no universo feminino, acredita que toda mulher merece cuidados de saúde mental que respeitem suas particularidades biológicas, psicológicas e sociais.</p><p style="font-family: \'Neue Montreal\', sans-serif; font-size: 18px; line-height: 1.6; color: #6b7280;">Especializou-se em Psiquiatria no Hospital Beatriz Ângelo, com foco em Psiquiatria da Mulher e Psiquiatria Perinatal. Sua prática clínica baseia-se em pilares fundamentais: cuidado humanizado, evidência científica, abordagem integral e empoderamento da paciente. Dedica-se também à investigação científica, com interesse particular em perturbações do humor no período perinatal, impacto hormonal na saúde mental, sexualidade, identidade de género, competências parentais e dinâmicas familiares.</p>',
                                 'align' => 'left'
                             ]
                         ]
@@ -346,7 +346,7 @@ $elementor_data[] = [
                                 'image' => [
                                     'url' => $template_dir . '/images/fotofrederica.webp',
                                     'id' => '',
-                                    'alt' => 'Dra. Frederica Passos Barbizani'
+                                    'alt' => 'Dra Frederica Passos Barbizani'
                                 ],
                                 'image_size' => 'full',
                                 'align' => 'center',

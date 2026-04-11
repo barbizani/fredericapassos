@@ -124,7 +124,7 @@
                 </div>
                 <div class="order-1 lg:order-2">
                     <img src="<?php echo get_template_directory_uri(); ?>/images/fotofrederica.webp"
-                         alt="Dra. Frederica Passos"
+                         alt="Dra Frederica Passos"
                          class="w-full h-auto rounded-lg shadow-2xl">
                 </div>
             </div>

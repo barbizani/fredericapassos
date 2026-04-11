@@ -25,7 +25,7 @@ export default function LisboaLandingPage() {
         >
           <Image
             src="/Foto_atendimento.jpeg"
-            alt="Dra. Frederica Passos"
+            alt="Dra Frederica Passos"
             width={400}
             height={400}
             className="w-full h-full object-cover rounded-full"
@@ -46,7 +46,7 @@ export default function LisboaLandingPage() {
             Um espaço seguro para a sua <span className="text-[#f56428]">mente.</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/60 leading-relaxed font-light">
-            Sua jornada para o equilíbrio não precisa esperar por agendas lotadas. 
+            A sua jornada para o equilíbrio não precisa esperar por agendas lotadas. 
             Novos horários abertos para teleconsulta exclusiva.
           </p>
           
@@ -54,7 +54,7 @@ export default function LisboaLandingPage() {
             <WhatsAppButton 
               number="+351963564444" 
               variant="glow"
-              message="Olá Dra. Frederica, gostaria de agendar uma CONSULTA EXTRA."
+              message="Olá Dra Frederica, gostaria de agendar uma CONSULTA EXTRA."
             />
           </div>
           <p className="text-sm text-white/30 tracking-wide pt-4">NÃO DEIXE PARA DEPOIS O QUE PODE SER RESOLVIDO HOJE.</p>
@@ -65,8 +65,8 @@ export default function LisboaLandingPage() {
       <section className="relative py-24 px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { title: 'Ansiedade e Depressão', desc: 'Recupere o controle e o bem-estar emocional.' },
-              { title: 'Esgotamento', desc: 'Cuidado especializado para Burnout e stress crônico.' },
+              { title: 'Ansiedade', desc: 'Espaço seguro para gerir preocupações e encontrar calma.' },
+              { title: 'Depressão', desc: 'Apoio especializado para recuperar a energia e o equilíbrio emocional.' },
               { title: 'PHDA Adulto', desc: 'Foco e organização para mentes contemporâneas.' },
               { title: 'Psiquiatria da Mulher', desc: 'Apoio nas diversas fases da vida feminina.' },
               { title: 'Psiquiatria Perinatal', desc: 'Saúde mental na pré-conceção, gravidez e pós-parto.' },
@@ -95,7 +95,7 @@ export default function LisboaLandingPage() {
               Num mundo acelerado, a flexibilidade é essencial. A teleconsulta mantém toda a profundidade técnica do atendimento presencial, mas elimina as barreiras de deslocação e tempo.
             </p>
             <p className="text-lg text-white/50 leading-relaxed font-bold">
-              Psiquiatria Contemporânea: No centro de Lisboa ou em qualquer parte do mundo.
+              Psiquiatria Contemporânea: No centro da cidade ou em qualquer parte do mundo.
             </p>
           </div>
           <div className="w-full md:w-auto mt-4">
@@ -108,7 +108,7 @@ export default function LisboaLandingPage() {
         <h2 className="text-2xl font-jh-caudemars mb-8 opacity-70 italic font-light">Vamos dar o primeiro passo?</h2>
         <WhatsAppButton 
               number="+351963564444" 
-              message="Olá Dra. Frederica, gostaria de agendar uma CONSULTA EXTRA."
+              message="Olá Dra Frederica, gostaria de agendar uma CONSULTA EXTRA."
             />
       </div>
 

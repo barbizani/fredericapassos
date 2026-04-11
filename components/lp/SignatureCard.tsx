@@ -19,8 +19,8 @@ export default function SignatureCard({ dark = false }: { dark?: boolean }) {
         />
       </div>
       <div className="flex flex-col text-left">
-        <span className={`font-jh-caudemars text-lg ${dark ? 'text-white' : 'text-[#161616]'}`}>Dra. Frederica Passos</span>
-        <span className={`text-xs font-nord uppercase tracking-widest ${dark ? 'text-white/40' : 'text-[#161616]/60'}`}>Psiquiatra • OM 70932</span>
+        <span className={`font-jh-caudemars text-xl md:text-2xl tracking-[0.1em] mb-1 ${dark ? 'text-white' : 'text-[#161616]'}`}>Dra Frederica Passos</span>
+        <span className={`text-[10px] sm:text-xs font-nord uppercase tracking-widest ${dark ? 'text-white/40' : 'text-[#161616]/60'}`}>Psiquiatra • OM 70932</span>
       </div>
     </div>
   )

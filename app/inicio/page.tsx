@@ -177,8 +177,8 @@ export default function InicioPage() {
   const handleWhatsApp = (type: 'agendamento' | 'orcamento' = 'agendamento') => {
     const number = "351963564444"
     const message = type === 'agendamento' 
-      ? "Olá Dra. Frederica, vim do seu site e gostaria de agendar uma consulta de psiquiatria."
-      : "Olá Dra. Frederica, gostaria de conversar sobre um orçamento dos seus serviços."
+      ? "Olá Dra Frederica, vim do seu site e gostaria de agendar uma consulta de psiquiatria."
+      : "Olá Dra Frederica, gostaria de conversar sobre um orçamento dos seus serviços."
     
     window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, '_blank')
   }
@@ -531,7 +531,7 @@ export default function InicioPage() {
             <div className="flex-shrink-0 z-10">
               <Image
                 src="/logohoriz.svg"
-                alt="Logo Dra. Frederica Passos"
+                alt="Logo Dra Frederica Passos"
                 width={200}
                 height={60}
                 className="h-10 md:h-12 w-auto object-contain"
@@ -1014,7 +1014,7 @@ export default function InicioPage() {
 
               <div className="space-y-4 sm:space-y-6 text-gray-700 text-sm sm:text-base md:text-lg">
                 <p className="font-neue-montreal leading-relaxed">
-                  <strong>Dra. Frederica Passos Barbizani</strong> é psiquiatra especializada em Saúde Mental da Mulher. Com foco no universo feminino, acredita que toda mulher merece cuidados de saúde mental que respeitem suas particularidades biológicas, psicológicas e sociais.
+                  <strong>Dra Frederica Passos Barbizani</strong> é psiquiatra especializada em Saúde Mental da Mulher. Com foco no universo feminino, acredita que toda mulher merece cuidados de saúde mental que respeitem suas particularidades biológicas, psicológicas e sociais.
                 </p>
 
                 <p className="font-neue-montreal leading-relaxed">
@@ -1028,7 +1028,7 @@ export default function InicioPage() {
               <div className="relative w-full aspect-[3/4] lg:aspect-[4/5]">
                 <Image
                   src="/fotofrederica.webp"
-                  alt="Dra. Frederica Passos Barbizani"
+                  alt="Dra Frederica Passos Barbizani"
                   fill
                   className="object-cover rounded-lg"
                   quality={100}
@@ -2829,7 +2829,7 @@ export default function InicioPage() {
             {/* Copyright and Legal Links */}
             <div className="pt-8 border-t border-white/10 w-full flex flex-col items-center gap-4">
               <div className="text-white/40 text-sm text-center font-nord">
-                © 2026 Dra. Frederica Passos - Mentes Modernas. Todos os direitos reservados.®
+                © 2026 Dra Frederica Passos - Mentes Modernas. Todos os direitos reservados.®
               </div>
               <div className="flex gap-6 text-white/40 text-xs font-nord uppercase tracking-widest">
                 <button className="hover:text-white transition-colors">Termos & Condições</button>

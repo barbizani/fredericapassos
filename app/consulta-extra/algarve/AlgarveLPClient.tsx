@@ -11,7 +11,7 @@ export default function AlgarveLandingPage() {
     <main className="min-h-screen bg-white text-[#161616] font-neue-montreal">
       {/* Dynamic Header */}
       <nav className="w-full py-6 px-8 flex justify-between items-center border-b border-[#f1f1f1]">
-        <div className="text-xl font-nord font-bold tracking-tighter">DRA. FREDERICA PASSOS</div>
+        <div className="text-xl font-nord font-bold tracking-tighter">DRA FREDERICA PASSOS</div>
         <div className="hidden md:block text-sm font-nord text-[#f56428]">AGENDAMENTO PRIORITÁRIO</div>
       </nav>
 
@@ -22,7 +22,7 @@ export default function AlgarveLandingPage() {
            <div className="w-40 h-40 md:w-56 md:h-56 flex-shrink-0 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-2">
             <Image
               src="/Foto_atendimento.jpeg"
-              alt="Dra. Frederica Passos"
+              alt="Dra Frederica Passos"
               width={300}
               height={300}
               className="w-full h-full object-cover"
@@ -49,7 +49,7 @@ export default function AlgarveLandingPage() {
            {/* Decorative circle */}
            <div className="absolute top-[-50px] right-[-50px] w-64 h-64 bg-[#f56428] opacity-20 rounded-full blur-3xl" />
            
-           <h2 className="text-3xl md:text-4xl font-jh-caudemars">Agende seu horário de forma prática</h2>
+           <h2 className="text-3xl md:text-4xl font-jh-caudemars">Agende o seu horário de forma prática</h2>
            
            <div className="flex flex-col md:flex-row justify-center gap-8 text-left mb-8">
               <div className="flex gap-4">
@@ -79,7 +79,7 @@ export default function AlgarveLandingPage() {
              <WhatsAppButton 
                 number="+351963564444" 
                 variant="standard"
-                message="Olá Dra. Frederica, gostaria de agendar uma CONSULTA EXTRA."
+                message="Olá Dra Frederica, gostaria de agendar uma CONSULTA EXTRA."
               />
            </div>
         </section>
@@ -88,7 +88,7 @@ export default function AlgarveLandingPage() {
         <section className="mt-24 text-center">
             <p className="text-sm font-nord text-[#161616]/40 uppercase tracking-widest mb-10">Especialidades do atendimento</p>
             <div className="flex flex-wrap justify-center gap-4">
-              {['Ansiedade e Depressão', 'Esgotamento', 'PHDA Adulto', 'Psiquiatria da Mulher', 'Psiquiatria Perinatal', 'Sexualidade Humana'].map((tag) => (
+              {['Ansiedade', 'Depressão', 'PHDA Adulto', 'Psiquiatria da Mulher', 'Psiquiatria Perinatal', 'Sexualidade Humana'].map((tag) => (
                 <span key={tag} className="px-6 py-2 border border-[#f1f1f1] rounded-full text-sm font-medium hover:border-[#f56428] transition-colors">
                   {tag}
                 </span>

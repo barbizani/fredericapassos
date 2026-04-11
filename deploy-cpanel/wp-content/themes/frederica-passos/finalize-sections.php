@@ -159,7 +159,7 @@ $complete_elementor_data = [
                                 'elType' => 'widget',
                                 'widgetType' => 'text-editor',
                                 'settings' => [
-                                    'editor' => '<p><strong>Dra. Frederica Passos Barbizani</strong> é psiquiatra especializada em Saúde Mental da Mulher. Com foco no universo feminino, acredita que toda mulher merece cuidados de saúde mental que respeitem suas particularidades biológicas, psicológicas e sociais.</p><p>Especializou-se em Psiquiatria no Hospital Beatriz Ângelo, com foco em Psiquiatria da Mulher e Psiquiatria Perinatal. Sua prática clínica baseia-se em pilares fundamentais: cuidado humanizado, evidência científica, abordagem integral e empoderamento da paciente.</p>',
+                                    'editor' => '<p><strong>Dra Frederica Passos Barbizani</strong> é psiquiatra especializada em Saúde Mental da Mulher. Com foco no universo feminino, acredita que toda mulher merece cuidados de saúde mental que respeitem suas particularidades biológicas, psicológicas e sociais.</p><p>Especializou-se em Psiquiatria no Hospital Beatriz Ângelo, com foco em Psiquiatria da Mulher e Psiquiatria Perinatal. Sua prática clínica baseia-se em pilares fundamentais: cuidado humanizado, evidência científica, abordagem integral e empoderamento da paciente.</p>',
                                     'typography_typography' => 'custom',
                                     'typography_font_family' => 'Neue Montreal',
                                     'typography_font_size' => ['unit' => 'px', 'size' => 18]
@@ -179,7 +179,7 @@ $complete_elementor_data = [
                                 'settings' => [
                                     'image' => [
                                         'url' => get_template_directory_uri() . '/images/fotofrederica.webp',
-                                        'alt' => 'Dra. Frederica Passos Barbizani'
+                                        'alt' => 'Dra Frederica Passos Barbizani'
                                     ],
                                     'image_border_radius' => ['unit' => 'px', 'size' => 8],
                                     'align' => 'center'

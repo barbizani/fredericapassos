@@ -15,7 +15,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0">
                     <img src="<?php echo get_template_directory_uri(); ?>/images/logoclara.svg"
-                         alt="Logo Dra. Frederica Passos"
+                         alt="Logo Dra Frederica Passos"
                          class="h-16 md:h-20 lg:h-24 w-auto object-contain">
                 </div>
 
