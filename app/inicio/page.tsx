@@ -531,7 +531,7 @@ export default function InicioPage() {
             {/* Logo */}
             <div className="flex-shrink-0 z-10">
               <Image
-                src="/logohoriz.svg"
+                src="/logos/logo-roxo-laranja.svg"
                 alt="Logo Dra Frederica Passos"
                 width={200}
                 height={60}

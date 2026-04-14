@@ -11,7 +11,14 @@ export default function AlgarveLandingPage() {
     <main className="min-h-screen bg-white text-[#161616] font-neue-montreal">
       {/* Dynamic Header */}
       <nav className="w-full py-6 px-8 flex justify-between items-center border-b border-[#f1f1f1]">
-        <div className="text-xl font-nord font-bold tracking-tighter">DRA FREDERICA PASSOS</div>
+        <div className="relative w-48 h-8">
+          <Image
+            src="/logos/logo-roxo-laranja.svg"
+            alt="Dra Frederica Passos"
+            fill
+            className="object-contain object-left"
+          />
+        </div>
         <div className="hidden md:block text-sm font-nord text-[#f56428]">AGENDAMENTO PRIORITÁRIO</div>
       </nav>
 

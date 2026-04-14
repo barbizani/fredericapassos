@@ -22,6 +22,18 @@ export default function PortoLandingPage() {
       <div className="w-full bg-[#70309e] py-2 text-center text-white text-sm font-nord font-light tracking-wide uppercase">
         disponibilidade especial para este canal
       </div>
+      
+      {/* Header */}
+      <nav className="w-full py-6 px-8 flex justify-center md:justify-start items-center bg-white border-b border-gray-100">
+        <div className="relative w-48 h-10">
+          <Image
+            src="/logos/logo-roxo-laranja.svg"
+            alt="Dra Frederica Passos"
+            fill
+            className="object-contain"
+          />
+        </div>
+      </nav>
 
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 py-12 md:py-24 flex flex-col md:flex-row items-center gap-12">

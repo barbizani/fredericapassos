@@ -9,6 +9,21 @@ import SignatureCard from '../../../components/lp/SignatureCard'
 export default function LisboaLandingPage() {
   return (
     <main className="min-h-screen bg-[#161616] text-white font-neue-montreal overflow-hidden">
+      {/* Dynamic Header */}
+      <nav className="relative z-50 w-full py-6 px-8 flex justify-between items-center bg-transparent">
+        <div className="relative w-48 h-8">
+          <Image
+            src="/logos/logo-branco-laranja.svg"
+            alt="Dra Frederica Passos"
+            fill
+            className="object-contain object-left"
+          />
+        </div>
+        <div className="hidden md:block text-xs font-nord text-white/40 tracking-[0.2em] uppercase">
+          Portugal • Internacional
+        </div>
+      </nav>
+
       {/* Background Glow Pattern */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#70309e] blur-[150px] opacity-20 rounded-full" />
