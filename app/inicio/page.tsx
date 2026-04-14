@@ -1,4 +1,5 @@
 'use client'
+// Teste de autenticação após reset de password
 
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
