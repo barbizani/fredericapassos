@@ -24,8 +24,29 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# ============================================================
+# SEGURANÇA: Arquivos de ambiente e credenciais
+# NUNCA remova estas entradas - protegem chaves de API no Git
+# ============================================================
 # local env files
-.env*.local
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.staging
+.env.test
+
+# WordPress config com credenciais de BD e salts
+wordpress/wp-config.php
+
+# Chaves privadas e certificados
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
 
 # vercel
 .vercel

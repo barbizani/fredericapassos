@@ -2440,16 +2440,18 @@ export default function InicioPage() {
                 setIsSubmitting(true)
                 
                 try {
-                  // URL do seu Google Apps Script ativa
-                  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwLphRoGmFg8MYGu3_2DaehdU9-H3HdqT0AWrCLRUySOWtB9NZRUKrrANdWwKbi9volgg/exec' 
+                  // URL da sua Local API Route
+                  const API_ROUTE_URL = '/api/contact'
                   
-                  await fetch(GOOGLE_SCRIPT_URL, {
+                  const response = await fetch(API_ROUTE_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Necessário para Google Apps Script
-                    cache: 'no-cache',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
                   })
+                  
+                  if (!response.ok) {
+                    throw new Error('Erro ao submeter formulário')
+                  }
 
                   alert('Formulário enviado com sucesso! Entraremos em contacto em breve.')
                   setFormData({
