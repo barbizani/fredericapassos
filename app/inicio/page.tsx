@@ -51,6 +51,7 @@ export default function InicioPage() {
   })
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [isEnviarHovered, setIsEnviarHovered] = useState(false)
   const [statsCounters, setStatsCounters] = useState({
     mulheres: 0,
@@ -78,23 +79,11 @@ export default function InicioPage() {
   const perinatalCardRef = useRef<HTMLDivElement>(null)
   const sexhumanCardRef = useRef<HTMLDivElement>(null)
 
-  const formatarTelefonePortugal = (value: string) => {
-    const numbers = value.replace(/\D/g, '')
-    if (numbers.length === 0) return ''
-    if (numbers.startsWith('351')) {
-      const withoutCountry = numbers.slice(3)
-      if (withoutCountry.length <= 3) return `+351 ${withoutCountry}`
-      if (withoutCountry.length <= 6) return `+351 ${withoutCountry.slice(0, 3)} ${withoutCountry.slice(3)}`
-      return `+351 ${withoutCountry.slice(0, 3)} ${withoutCountry.slice(3, 6)} ${withoutCountry.slice(6, 9)}`
-    }
-    if (numbers.length <= 3) return `+351 ${numbers}`
-    if (numbers.length <= 6) return `+351 ${numbers.slice(0, 3)} ${numbers.slice(3)}`
-    return `+351 ${numbers.slice(0, 3)} ${numbers.slice(3, 6)} ${numbers.slice(6, 9)}`
-  }
 
   const slides = [
-    { id: 0, color: '#70309e', label: 'Roxo' },
     { id: 1, color: '#f56428', label: 'Laranja' },
+    { id: 0, color: '#70309e', label: 'Roxo' },
+    { id: 11, color: '#f56428', label: 'Laranja' },
     { id: 2, color: '#6b7280', label: 'Cinza' },
   ]
 
@@ -818,27 +807,49 @@ export default function InicioPage() {
 
                   {/* Background SVG no slide laranja com parallax */}
                   {slide.color === '#f56428' && (
-                    <motion.div
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage: 'url(/srosa.svg)',
-                        backgroundSize: isMobile ? '200%' : 'clamp(35%, 50vw, 60%)',
-                        backgroundPosition: isMobile ? 'center center' : '5% center',
-                        backgroundRepeat: 'no-repeat',
-                        opacity: 1,
-                        x: parallaxX,
-                        y: parallaxY,
-                      }}
-                    />
+                    <>
+                      <motion.div
+                        className="absolute inset-0"
+                        style={{
+                          backgroundImage: 'url(/srosa.svg)',
+                          backgroundSize: isMobile ? '200%' : 'clamp(35%, 50vw, 60%)',
+                          backgroundPosition: isMobile ? 'center center' : '5% center',
+                          backgroundRepeat: 'no-repeat',
+                          opacity: 1,
+                          x: parallaxX,
+                          y: parallaxY,
+                        }}
+                      />
+                      {/* Foto da Dra recortada - Camada à frente do fundo */}
+                      <motion.div
+                        className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden"
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                      >
+                        <div 
+                          className="relative w-[145%] sm:w-[120%] h-[110%] sm:h-[115%] top-[15%] sm:top-[18%] sm:ml-[-18%] md:ml-[-14%] lg:ml-[-10%]"
+                          style={{ mixBlendMode: 'multiply' }}
+                        >
+                          <Image
+                            src="/Foto_a-porta-no-background.svg"
+                            alt="Dra Frederica Passos"
+                            fill
+                            className="object-contain object-bottom"
+                            priority
+                          />
+                        </div>
+                      </motion.div>
+                    </>
                   )}
 
                   {/* Conteúdo no slide laranja */}
                   {slide.color === '#f56428' && (
                     <>
                       {/* Textos e botão - Centralizados */}
-                      <div className="absolute left-0 top-0 bottom-0 w-full flex items-center z-10">
+                      <div className="absolute left-0 top-0 bottom-0 w-full flex items-center z-10 pointer-events-none">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-center sm:justify-end pr-4 sm:pr-8 md:pr-16 lg:pr-24">
-                          <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 text-white text-center sm:text-left">
+                          <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 text-white text-center sm:text-left pointer-events-auto">
                             <h1 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-tight">
                               Prazer,<br />
                               Frederica Passos
@@ -2431,7 +2442,7 @@ export default function InicioPage() {
                 errors.email = 'E-mail inválido'
               }
               if (!formData.telefone.trim()) errors.telefone = 'Telefone é obrigatório'
-              if (!formData.tipoConsulta) errors.tipoConsulta = 'Tipo de consulta é obrigatório'
+              if (!formData.tipoConsulta) errors.tipoConsulta = 'Assunto é obrigatório'
               if (!formData.mensagem.trim()) errors.mensagem = 'Mensagem é obrigatória'
 
               setFormErrors(errors)
@@ -2453,7 +2464,7 @@ export default function InicioPage() {
                     throw new Error('Erro ao submeter formulário')
                   }
 
-                  alert('Formulário enviado com sucesso! Entraremos em contacto em breve.')
+                  setShowSuccessMessage(true)
                   setFormData({
                     nome: '',
                     email: '',
@@ -2461,6 +2472,8 @@ export default function InicioPage() {
                     tipoConsulta: '',
                     mensagem: ''
                   })
+                  // Esconde a mensagem após 10 segundos
+                  setTimeout(() => setShowSuccessMessage(false), 10000)
                 } catch (error) {
                   console.error('Erro ao enviar formulário:', error)
                   alert('Ocorreu um erro ao enviar. Por favor, tente novamente ou contacte-nos via WhatsApp.')
@@ -2482,7 +2495,7 @@ export default function InicioPage() {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${formErrors.nome ? 'border-red-500' : 'border-white/20'
                   } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors`}
-                placeholder="Seu nome completo"
+                placeholder="Nome completo"
               />
               {formErrors.nome && (
                 <p className="text-red-200 text-sm mt-1 font-neue-montreal">{formErrors.nome}</p>
@@ -2515,13 +2528,10 @@ export default function InicioPage() {
                 type="tel"
                 id="telefone"
                 value={formData.telefone}
-                onChange={(e) => {
-                  const formatted = formatarTelefonePortugal(e.target.value)
-                  setFormData({ ...formData, telefone: formatted })
-                }}
+                onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                 className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${formErrors.telefone ? 'border-red-500' : 'border-white/20'
                   } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors`}
-                placeholder="+351 912 345 678"
+                placeholder="Contacto telefónico"
               />
               {formErrors.telefone && (
                 <p className="text-red-200 text-sm mt-1 font-neue-montreal">{formErrors.telefone}</p>
@@ -2530,10 +2540,10 @@ export default function InicioPage() {
 
             <div>
               <label className="block text-white font-neue-montreal text-sm font-medium mb-3">
-                Tipo de Consulta *
+                Assunto: *
               </label>
               <div className="space-y-3">
-                {['Primeira Consulta', 'Consulta de Seguimento', 'Teleatendimento'].map((tipo) => (
+                {['Consulta de saúde mental', 'Formações', 'Contratações', 'Convites', 'Outros'].map((tipo) => (
                   <label
                     key={tipo}
                     className="flex items-center cursor-pointer group"
@@ -2584,7 +2594,7 @@ export default function InicioPage() {
                 rows={6}
                 className={`w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border-2 ${formErrors.mensagem ? 'border-red-500' : 'border-white/20'
                   } text-white placeholder-white/60 font-neue-montreal focus:outline-none focus:border-white/40 transition-colors resize-none`}
-                placeholder="Escreva sua mensagem..."
+                placeholder="Escreva aqui a sua mensagem."
               />
               {formErrors.mensagem && (
                 <p className="text-red-200 text-sm mt-1 font-neue-montreal">{formErrors.mensagem}</p>
@@ -2612,9 +2622,22 @@ export default function InicioPage() {
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
               />
               <span className="relative z-10">
-                {isSubmitting ? 'Enviando...' : 'Enviar'}
+                {isSubmitting ? 'Aguarde...' : 'Enviar'}
               </span>
             </motion.button>
+
+            <AnimatePresence>
+              {showSuccessMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="mt-4 p-4 bg-green-500/20 backdrop-blur-sm border border-green-500/50 rounded-lg text-white text-center font-neue-montreal"
+                >
+                  A sua mensagem foi enviada com sucesso, em breve a minha equipa entrará em contato. Obrigada.
+                </motion.div>
+              )}
+            </AnimatePresence>
           </form>
         </div>
       </motion.section>
