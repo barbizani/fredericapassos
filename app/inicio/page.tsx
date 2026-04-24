@@ -1708,117 +1708,118 @@ export default function InicioPage() {
         </div>
       </motion.section>
 
-      {/* Seção Estatísticas da Prática Clínica - Oculta temporariamente a pedido do utilizador
-      <section
-        ref={statsRef}
-        className="w-full bg-[#70309e] py-12 sm:py-16 md:py-24 min-h-[300px] sm:min-h-[400px] flex items-center"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <h2 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white mb-8 sm:mb-12 md:mb-16 text-center">
-            Estatísticas da Prática Clínica
-          </h2>
+      {/* Seção Estatísticas da Prática Clínica - Oculta temporariamente a pedido do utilizador */}
+      {false && (
+        <section
+          ref={statsRef}
+          className="w-full bg-[#70309e] py-12 sm:py-16 md:py-24 min-h-[300px] sm:min-h-[400px] flex items-center"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <h2 className="font-jh-caudemars text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white mb-8 sm:mb-12 md:mb-16 text-center">
+              Estatísticas da Prática Clínica
+            </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {/* Mulheres Tratadas */}
-            <div className="flex flex-col items-center text-center w-full max-w-full px-4 py-6 rounded-lg">
-              <div className="mb-6 sm:mb-8">
-                <Image
-                  src="/iconmulher.png"
-                  alt="Mulheres"
-                  width={120}
-                  height={120}
-                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
-                />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+              {/* Mulheres Tratadas */}
+              <div className="flex flex-col items-center text-center w-full max-w-full px-4 py-6 rounded-lg">
+                <div className="mb-6 sm:mb-8">
+                  <Image
+                    src="/iconmulher.png"
+                    alt="Mulheres"
+                    width={120}
+                    height={120}
+                    className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
+                  />
+                </div>
+                <motion.div
+                  className="text-4xl sm:text-5xl md:text-6xl font-jh-caudemars font-bold text-white mb-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  +{statsCounters.mulheres}
+                </motion.div>
+                <p className="text-white/90 font-neue-montreal text-sm sm:text-base md:text-lg break-words hyphens-auto">
+                  Mulheres Tratadas em Psiquiatria Perinatal
+                </p>
               </div>
-              <motion.div
-                className="text-4xl sm:text-5xl md:text-6xl font-jh-caudemars font-bold text-white mb-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 20 }}
-                transition={{ duration: 0.5 }}
-              >
-                +{statsCounters.mulheres}
-              </motion.div>
-              <p className="text-white/90 font-neue-montreal text-sm sm:text-base md:text-lg break-words hyphens-auto">
-                Mulheres Tratadas em Psiquiatria Perinatal
-              </p>
-            </div>
 
-            {/* Melhoria Depressão */}
-            <div className="flex flex-col items-center text-center w-full max-w-full px-4 py-6 rounded-lg">
-              <div className="mb-6 sm:mb-8">
-                <Image
-                  src="/iconup.png"
-                  alt="Melhoria"
-                  width={120}
-                  height={120}
-                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
-                />
+              {/* Melhoria Depressão */}
+              <div className="flex flex-col items-center text-center w-full max-w-full px-4 py-6 rounded-lg">
+                <div className="mb-6 sm:mb-8">
+                  <Image
+                    src="/iconup.png"
+                    alt="Melhoria"
+                    width={120}
+                    height={120}
+                    className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
+                  />
+                </div>
+                <motion.div
+                  className="text-4xl sm:text-5xl md:text-6xl font-jh-caudemars font-bold text-white mb-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 20 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  {statsCounters.melhoria}%
+                </motion.div>
+                <p className="text-white/90 font-neue-montreal text-sm sm:text-base md:text-lg break-words hyphens-auto">
+                  Melhoria Significativa nos<br />
+                  Sintomas de Depressão Pós Parto
+                </p>
               </div>
-              <motion.div
-                className="text-4xl sm:text-5xl md:text-6xl font-jh-caudemars font-bold text-white mb-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 20 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                {statsCounters.melhoria}%
-              </motion.div>
-              <p className="text-white/90 font-neue-montreal text-sm sm:text-base md:text-lg break-words hyphens-auto">
-                Melhoria Significativa nos<br />
-                Sintomas de Depressão Pós Parto
-              </p>
-            </div>
 
-            {/* Profissionais Formados */}
-            <div className="flex flex-col items-center text-center w-full max-w-full px-4 py-6 rounded-lg">
-              <div className="mb-6 sm:mb-8">
-                <Image
-                  src="/icongrad.png"
-                  alt="Profissionais"
-                  width={120}
-                  height={120}
-                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
-                />
+              {/* Profissionais Formados */}
+              <div className="flex flex-col items-center text-center w-full max-w-full px-4 py-6 rounded-lg">
+                <div className="mb-6 sm:mb-8">
+                  <Image
+                    src="/icongrad.png"
+                    alt="Profissionais"
+                    width={120}
+                    height={120}
+                    className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
+                  />
+                </div>
+                <motion.div
+                  className="text-4xl sm:text-5xl md:text-6xl font-jh-caudemars font-bold text-white mb-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 20 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  +{statsCounters.profissionais}
+                </motion.div>
+                <p className="text-white/90 font-neue-montreal text-sm sm:text-base md:text-lg break-words hyphens-auto">
+                  Profissionais de Saúde Formados
+                </p>
               </div>
-              <motion.div
-                className="text-4xl sm:text-5xl md:text-6xl font-jh-caudemars font-bold text-white mb-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 20 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                +{statsCounters.profissionais}
-              </motion.div>
-              <p className="text-white/90 font-neue-montreal text-sm sm:text-base md:text-lg break-words hyphens-auto">
-                Profissionais de Saúde Formados
-              </p>
-            </div>
 
-            {/* Satisfação */}
-            <div className="flex flex-col items-center text-center w-full max-w-full px-4 py-6 rounded-lg">
-              <div className="mb-6 sm:mb-8">
-                <Image
-                  src="/iconstars.png"
-                  alt="Satisfação"
-                  width={120}
-                  height={120}
-                  className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
-                />
+              {/* Satisfação */}
+              <div className="flex flex-col items-center text-center w-full max-w-full px-4 py-6 rounded-lg">
+                <div className="mb-6 sm:mb-8">
+                  <Image
+                    src="/iconstars.png"
+                    alt="Satisfação"
+                    width={120}
+                    height={120}
+                    className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
+                  />
+                </div>
+                <motion.div
+                  className="text-4xl sm:text-5xl md:text-6xl font-jh-caudemars font-bold text-white mb-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 20 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                  {statsCounters.satisfacao}%
+                </motion.div>
+                <p className="text-white/90 font-neue-montreal text-sm sm:text-base md:text-lg break-words hyphens-auto">
+                  Satisfação com o Tratamento
+                </p>
               </div>
-              <motion.div
-                className="text-4xl sm:text-5xl md:text-6xl font-jh-caudemars font-bold text-white mb-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 20 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                {statsCounters.satisfacao}%
-              </motion.div>
-              <p className="text-white/90 font-neue-montreal text-sm sm:text-base md:text-lg break-words hyphens-auto">
-                Satisfação com o Tratamento
-              </p>
             </div>
           </div>
-        </div>
-      </section>
-      */}
+        </section>
+      )}
 
       {/* Seção Recursos Educativos */}
       <motion.section
