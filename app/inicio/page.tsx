@@ -1708,7 +1708,7 @@ export default function InicioPage() {
         </div>
       </motion.section>
 
-      {/* Seção Estatísticas da Prática Clínica */}
+      {/* Seção Estatísticas da Prática Clínica - Oculta temporariamente a pedido do utilizador
       <section
         ref={statsRef}
         className="w-full bg-[#70309e] py-12 sm:py-16 md:py-24 min-h-[300px] sm:min-h-[400px] flex items-center"
@@ -1818,6 +1818,7 @@ export default function InicioPage() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Seção Recursos Educativos */}
       <motion.section
