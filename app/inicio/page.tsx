@@ -71,7 +71,7 @@ export default function InicioPage() {
   const recursosRef = useRef<HTMLElement>(null)
   const faqRef = useRef<HTMLElement>(null)
   const contatoRef = useRef<HTMLElement>(null)
-  const ebookButtonRef = useRef<HTMLDivElement>(null)
+  const ebookButtonRef = useRef<any>(null)
   const artigosButtonRef = useRef<HTMLDivElement>(null)
   const videosButtonRef = useRef<HTMLDivElement>(null)
   const mulherCardRef = useRef<HTMLDivElement>(null)
@@ -307,7 +307,7 @@ export default function InicioPage() {
         return () => clearTimeout(pauseTimeout)
       }
     }
-  }, [typewriterText, isTyping, currentPhraseIndex, phrases])
+  }, [typewriterText, isTyping, currentPhraseIndex])
 
   // Iniciar typewriter ao montar
   useEffect(() => {
