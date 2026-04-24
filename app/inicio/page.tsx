@@ -1942,10 +1942,13 @@ export default function InicioPage() {
             {/* Botões - Lado Direito */}
             <div className="flex-1 flex flex-col gap-4 sm:gap-6 w-full lg:w-auto justify-center">
               {/* E-books */}
-              <div
-                ref={ebookButtonRef}
-                className="relative w-full lg:w-64"
+              <a
+                href="/FOLDER.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative w-full lg:w-64 block no-underline"
                 style={{ perspective: '1000px', zIndex: 10 }}
+                ref={ebookButtonRef}
               >
                 <div
                   className="absolute inset-0 z-20 cursor-pointer sm:cursor-pointer"
@@ -2026,7 +2029,7 @@ export default function InicioPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </motion.button>
-              </div>
+              </a>
 
               {/* Artigos e Guias */}
               <div
